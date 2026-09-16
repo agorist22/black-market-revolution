@@ -45,3 +45,5 @@ Ship a **runnable v2** that boots without NameErrors, with logging quiet enough 
 - Collaborator search (D-03)
 - Save/load polish beyond "does not crash if present"
 - Refactoring the god script into packages (only if required to fix bugs)
+
+**Narrative (Echo):** [`narrative/`](narrative/) — Smuggle-01 / Deliver-01 briefings, stingers, street flavor.
