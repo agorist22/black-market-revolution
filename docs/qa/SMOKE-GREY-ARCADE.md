@@ -1,8 +1,8 @@
 # Smoke — Grey Arcade (OpenGta2 + grey-market slice)
 
 **Owner:** Spike (QA)  
-**Status:** Ready to execute when a Windows box has .NET 10 + a valid `OPENGTA2_PATH`  
-**Scope:** Grey-market vertical slice only (The Grey Arcade). HUD / audio / marketing remain HOLD until Reed unfreezes.  
+**Status:** Crashers **1–5 PASS** on Prometheus (Week 1 shell gate closed, 2026-09-16). Items **6–13 BLOCKED** — BMR systems not in the OpenGta2 shell yet (next gate once Vega lands grey-market systems per Sol).  
+**Scope:** Grey-market vertical slice only (The Grey Arcade). Pulse / Frame / Beacon stay docs-only until runtime to hook; Vega craft unfreeze is narrow (Sol eng order, start VS-04).  
 **Report blockers to:** Reed · **Repros to:** Vega
 
 ## Authority
@@ -74,6 +74,8 @@ Record each row: **PASS** | **FAIL** | **N/A** | **BLOCKED**. Crashers (1–5) g
 
 ### Grey-market slice (only after 1–5 PASS)
 
+**Current gate (2026-09-16):** Items **6–13 = BLOCKED** (not N/A). OpenGta2 shell boots, but crypto wallet/HUD, Underground Stack, Smuggle-01, wanted/NAP BMR systems are not implemented yet. Re-run this section when Vega lands systems (start: wallet + crypto HUD / VS-04). Keep rows on this checklist as the exit criteria.
+
 Locks: **crypto only** · **one underground property** · **Smuggle-01** · Grey Arcade clip `(0,2000)–(2000,4000)`.
 
 | # | Check | PASS | FAIL |
@@ -95,19 +97,19 @@ Locks: **crypto only** · **one underground property** · **Smuggle-01** · Grey
 
 | # | Result | Notes | Date / build |
 |---|--------|-------|----------------|
-| 1 | | | |
-| 2 | | | |
-| 3 | | | |
-| 4 | | | |
-| 5 | | | |
-| 6 | | | |
-| 7 | | | |
-| 8 | | | |
-| 9 | | | |
-| 10 | | | |
-| 11 | | | |
-| 12 | | | |
-| 13 | | | |
+| 1 | **PASS** | Full `dotnet build OpenGta2.sln` green; Client `PlatformTarget=x64` | 2026-09-16 / `1ad17aa` |
+| 2 | **PASS** | Window “Black Market Revolution” launches and stays up | 2026-09-16 / Prometheus |
+| 3 | **PASS** | Log `Using GTA2 data at: …\GTA2`; map + player visible | 2026-09-16 / Prometheus |
+| 4 | **PASS** | Player + camera in world; WASD/arrows sent, process healthy (eyes-on delta optional) | 2026-09-16 / Prometheus |
+| 5 | **PASS** | `CloseMainWindow` → exit 0, no hang | 2026-09-16 / Prometheus |
+| 6 | **BLOCKED** | BMR walk/clip systems not in shell yet | — |
+| 7 | **BLOCKED** | BMR car loop not in shell yet | — |
+| 8 | **BLOCKED** | Crypto earn / wallet not implemented | — |
+| 9 | **BLOCKED** | Underground Stack buy/income not implemented | — |
+| 10 | **BLOCKED** | Smuggle-01 not implemented | — |
+| 11 | **BLOCKED** | Wanted / police BMR hook not implemented | — |
+| 12 | **BLOCKED** | NAP rep cue not implemented | — |
+| 13 | **BLOCKED** | Slice stability pass waits on 6–12 | — |
 
 **Linux partial (reference only, not item-1 PASS):** `OpenGta2.GameData` library build can PASS on Linux; full solution Client build is out of scope there.
 
