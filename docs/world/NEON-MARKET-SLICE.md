@@ -1,8 +1,8 @@
 # Neon Market — Vertical Slice District (The Grey Arcade)
 
 **Owner:** Atlas (World / Level Design)  
-**Status:** Provisional geography for Week 1 / VS-03 — **aligned to Sol** `docs/GREY-MARKET-SLICE.md` §11  
-**Freeze:** Reed freezes after merge + smoke; do not invent a second district  
+**Status:** **FROZEN** for Week 1 — Sol `docs/GREY-MARKET-SLICE.md` §3 loop + §11 spatial checklist (on `main`)  
+**Authority:** Reed freeze 2026-09-16 — no second slice; geography changes only via Reed  
 **Audience:** Vega (clip + markers), Spike (playtest path), Ink/Forge (readability), Echo (names/copy)
 
 **Systems contract (Sol — do not contradict):**
@@ -65,7 +65,7 @@ Full 4000×4000
 | Pickup point | **Wharf Pickup** | `(960, 3640)` | 140×100 bay | Enter radius + interact |
 | Drop point | **Alley Drop** | `(1480, 3360)` | 80×80 | End of Neon Alley |
 | Buyable building | **Underground Stack** | `(880, 3180)` | 160×200 | Price 150; OWNED state |
-| Police spawn / patrol | **Toll Spur gate** | `(640, 2180)` | 200×80 | Wanted chase seed |
+| Police spawn / patrol | **Toll Spur gate** | gate center `(640, 2180)` · **POLICE_SEED** `(640, 2220)` | 200×80 | Eng implements **POLICE_SEED**; gate is the visual prop |
 | Soft bounds | Clip AABB | — | — | See above |
 
 **Collision:** Landmark footprints solid except Plaza floor and Neon Alley roadbed. Keep **≥64 px** driveable lane E–W through Plaza and through Alley.
@@ -116,7 +116,7 @@ y↑ toward rest of city / State
 | Fail | — | — | Timer 240s / wanted 3 while carrying / arrest-death while carrying — Sol §6 |
 
 **Alt path:** Service Alley `E1` — keep clear but secondary so the Alley stays obvious.  
-**Heat:** Police LOS at pickup or mid-alley → wanted +1 (Sol §6.2 / §7). Scripted readable beat: chase from Toll Spur `(640, 2220)`.
+**Heat (Week 1 — option A):** Scripted chase from Toll Spur `(640, 2220)` when **cargo flag is on** (wanted +1, one engage). Natural pickup-LOS per Sol §6.2 is **nice if a patrol reaches the bay** — not required for smoke; Toll Spur is too far for reliable natural LOS. Do not add a special Wharf officer for Week 1 unless smoke fails without it (option B deferred).
 
 **Order flexibility:** Property optional vs smuggle order (Sol acceptance) — both markers always available.
 
@@ -141,7 +141,7 @@ MARKER_DROP     = (1480, 3360)  # smuggle drop
 
 # Wanted / police
 ZONE_TOLL_SPUR = (400, 2000, 900, 2360)  # x0,y0,x1,y1
-POLICE_SEED    = (640, 2220)
+POLICE_SEED    = (640, 2220)  # source of truth for chase spawn (gate visual may sit at y=2180)
 
 # Soft Agorist core (lower police density)
 ZONE_ARCADE_CORE = (200, 2600, 1600, 3800)
@@ -156,9 +156,10 @@ ZONE_ARCADE_CORE = (200, 2600, 1600, 3800)
 Matches Sol beats A–H:
 
 1. Spawn Plaza — HUD crypto 80, wanted 0, NAP 50  
-2. Crypto Trader — 2–3 trades toward 150  
+2. Crypto Trader — 2–3 trades toward 150 (~90s with 30s CD; fine for systems)  
+   - **Alternate order (allowed):** Smuggle-01 first (+120) → then buy property — use if trader wait pads the smoke  
 3. Buy Underground Stack — OWNED + income tick  
-4. Accept Smuggle-01 at contact → Wharf pickup → Neon Alley → Drop  
+4. Accept Smuggle-01 at contact → Wharf pickup → Neon Alley → Drop (skip if already done in alt order)  
 5. Trigger wanted ≥1 (LOS or Toll Spur) — one chase  
 6. Optional NAP: do **not** shoot civilians; if testing cue, one unprovoked hit → toast  
 7. Slice-complete when: owned + ≥1 smuggle success + wanted ever ≥1 + NAP feedback shown (Sol §12)
@@ -190,5 +191,8 @@ Walk budget without car ~6–8 min for mission geography; full fantasy ≤15.
 |------|--------|
 | 2026-09-16 | Initial Grey Arcade draft from D-02 |
 | 2026-09-16 | Reconciled to Sol `GREY-MARKET-SLICE.md`: underground property (not mutual-aid); trader + contact + pickup/drop markers; crypto-only; Smuggle-01 route; §11 checklist coverage |
+| 2026-09-16 | **Frozen** on Reed order after Sol systems doc landed on `main` (PR #3). Hand-off to Vega: clip + markers only. |
+| 2026-09-16 | Sol reconcile: no hard conflicts. Soft patches — heat option A (scripted Toll Spur on cargo); Spike smuggle-first alt order. |
+| 2026-09-16 | Clarify Toll Spur: POLICE_SEED `(640, 2220)` wins over gate visual `(640, 2180)`. |
 
-*Ping Reed when this file is on the Week 1 docs PR; Vega can implement clip + markers; Spike can script the path above.*
+*Frozen. Vega implements clip + markers from the blockout list below. Spike uses the playtest path. Geography edits need Reed.*
