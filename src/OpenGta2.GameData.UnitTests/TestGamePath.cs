@@ -23,7 +23,7 @@ public static class TestGamePath
             return false;
         }
 
-        if (!Directory.Exists(path))
+        if (!System.IO.Directory.Exists(path))
         {
             error = $"{EnvironmentVariableName} is set to '{path}', but that directory does not exist.";
             return false;
