@@ -66,10 +66,10 @@ Or open `OpenGta2.sln` in Visual Studio on Windows.
 `TestGamePath` (Client and DebugConsole) reads the **user** environment variable
 `OPENGTA2_PATH` and expects an absolute path to the GTA2 data directory.
 
-**Current behavior:** if `OPENGTA2_PATH` is unset, path lookup null-forgives and
-will **NRE** at runtime. Set the variable before `dotnet run`. Hardening
-(process env, optional gitignored local config, loud failure) is in progress —
-do not rely on a silent default.
+**Current behavior (PR #7):** Client resolves **User or Process** `OPENGTA2_PATH`,
+requires `data\bil.gmp`, and **exits 1 with a clear error** if missing/wrong (no NRE).
+See [docs/BUILD-WINDOWS.md](docs/BUILD-WINDOWS.md) and the Week 1 smoke checklist in
+[docs/SMOKE-WINDOWS.md](docs/SMOKE-WINDOWS.md) (`scripts/smoke-crashers.ps1`).
 
 Example (Windows PowerShell, user scope):
 

@@ -41,3 +41,7 @@ Or open `OpenGta2.sln` in Visual Studio and F5.
 - [ ] `OPENGTA2_PATH` documented and verified
 - [ ] Client launches against legal data (or fails with a clear missing-path error)
 - [ ] Clean quit without crash
+
+## Week 1 smoke (crashers)
+
+Step-by-step PowerShell checklist (build → launch → map → move → quit) and `scripts/smoke-crashers.ps1`: see [SMOKE-WINDOWS.md](SMOKE-WINDOWS.md).
