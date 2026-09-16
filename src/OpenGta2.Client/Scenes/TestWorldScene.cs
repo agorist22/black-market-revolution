@@ -1,4 +1,5 @@
 using BlackMarketRevolution.Economy;
+using BlackMarketRevolution.Missions;
 using OpenGta2.Client.Components;
 using OpenGta2.Client.Diagnostics;
 using OpenGta2.Client.Peds;
@@ -22,6 +23,7 @@ public class TestWorldScene : Scene
         Game.Services.ReplaceService(new PedManager());
         Game.Services.ReplaceService(new PlayerWallet());
         Game.Services.ReplaceService(new UndergroundProperty());
+        Game.Services.ReplaceService(new SmuggleMission());
 
         AddComponent<AudioTestComponent>();
         AddComponent<MapComponent>();
@@ -31,6 +33,7 @@ public class TestWorldScene : Scene
         AddComponent<CameraComponent>();
         AddComponent<WalletHudComponent>();
         AddComponent<PropertyHudComponent>();
+        AddComponent<MissionHudComponent>();
         AddComponent<DebuggingDrawingComponent>();
     }
 }
