@@ -1,4 +1,12 @@
-# Week 1 plan — prototype stabilize (not empty scaffold)
+# Week 1 plan — grey-market slice on OpenGta2
+
+**Systems design (authoritative for loop/numbers):** [`GREY-MARKET-SLICE.md`](GREY-MARKET-SLICE.md) — earn crypto → underground property → one smuggle → wanted + NAP. Atlas district blockout and Frame HUD should follow that doc.
+
+**Legacy note:** Earlier checklist below targeted a recovered Pygame v2 monolith. That path is **archive/reference only**; do not treat Python stabilize as the Week 1 ship gate. Keep useful smoke-test intent (one district, no elections, no dual-currency depth).
+
+---
+
+## Archived Pygame stabilize checklist (reference)
 
 **Context:** Prototype code exists (v2 baseline in `archive/agorist_revolution_v2.py`). Week 1 is **make v2 launchable and clip to a vertical slice**, not greenfield scaffolding.
 
