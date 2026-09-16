@@ -30,6 +30,7 @@ Prioritized by system. **P0** = vertical slice blockers. Cap ~40 items. Format: 
 ### VS-04 | Single currency wallet (earn + spend)
 - **Priority:** P0
 - **Depends-on:** VS-01
+- **Numbers:** `GREY-MARKET-SLICE.md` §4 / §13 (crypto-only for slice)
 - **Acceptance:**
   - HUD shows balance
   - At least one earn source and one spend sink work in-session
