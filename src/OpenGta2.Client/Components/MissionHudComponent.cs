@@ -100,18 +100,22 @@ public sealed class MissionHudComponent : BaseDrawableComponent
             }
         }
 
-        // O — deliver / drop (proximity stub).
+        // O — deliver / drop (proximity stub). Clean run may grant NAP +5 (VS-08 N-04).
         if (_controls.IsKeyDown(Keys.O))
         {
-            if (_mission.TryDeliver(_wallet))
+            if (_mission.TryDeliver(_wallet, out var napBonus))
             {
                 _deliveredFlashSeconds = DeliveredFlashSeconds;
                 _failFlashSeconds = 0f;
                 DiagnosticValues.Set(
                     "mission",
-                    $"delivered +{SmuggleMission.RewardCrypto} (bal {_wallet.Crypto})");
+                    $"delivered +{SmuggleMission.RewardCrypto} (bal {_wallet.Crypto})" +
+                    (napBonus != 0 ? $"; NAP +{napBonus}" : ""));
                 Console.WriteLine(
-                    $"[VS-06] Delivered — +{SmuggleMission.RewardCrypto} crypto → {_wallet.Crypto}");
+                    $"[VS-06] Delivered — +{SmuggleMission.RewardCrypto} crypto → {_wallet.Crypto}" +
+                    (napBonus != 0
+                        ? $"; clean NAP +{napBonus}"
+                        : "; NAP clean bonus 0 (harmed or capped)"));
             }
             else
             {

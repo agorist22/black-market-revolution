@@ -1,4 +1,5 @@
 using BlackMarketRevolution.Economy;
+using BlackMarketRevolution.Nap;
 using BlackMarketRevolution.Slice;
 using BlackMarketRevolution.Wanted;
 
@@ -8,6 +9,7 @@ namespace BlackMarketRevolution.Missions;
 /// VS-06 Smuggle-01 state machine: accept → pickup → carry (timer) → deliver / fail.
 /// See docs/GREY-MARKET-SLICE.md §6 and docs/BALANCE-GREY-ARCADE.md M-01…M-07.
 /// Wanted heat uses shared <see cref="WantedMeter"/> (VS-07).
+/// Clean deliver may grant optional NAP +5 (VS-08 / N-04).
 /// </summary>
 public sealed class SmuggleMission
 {
@@ -17,10 +19,12 @@ public sealed class SmuggleMission
     public const int WantedFailThreshold = 3;
 
     private readonly WantedMeter _wanted;
+    private readonly NapReputation _nap;
 
-    public SmuggleMission(WantedMeter wanted)
+    public SmuggleMission(WantedMeter wanted, NapReputation nap)
     {
         _wanted = wanted;
+        _nap = nap;
     }
 
     public string Id { get; } = GreyMarketSliceIds.MissionSmuggle;
@@ -55,6 +59,7 @@ public sealed class SmuggleMission
         Phase = SmuggleMissionPhase.AwaitingPickup;
         CarryElapsedSeconds = 0f;
         CooldownElapsedSeconds = 0f;
+        _nap.BeginMissionRun();
         return true;
     }
 
@@ -72,18 +77,25 @@ public sealed class SmuggleMission
     /// <summary>
     /// Deliver at drop point. Pays <see cref="RewardCrypto"/> and clears to Available.
     /// Success while wanted ≥ 1 still pays (heat already priced).
+    /// Optional clean-run NAP +5 when no civilian harm this mission (VS-08 N-04).
     /// </summary>
-    public bool TryDeliver(PlayerWallet wallet)
+    /// <param name="napBonusApplied">Actual NAP delta from clean reward (0 if harmed / capped).</param>
+    public bool TryDeliver(PlayerWallet wallet, out int napBonusApplied)
     {
+        napBonusApplied = 0;
         if (Phase != SmuggleMissionPhase.Carrying)
             return false;
 
         wallet.AddCrypto(RewardCrypto);
+        napBonusApplied = _nap.TryRewardCleanSmuggle();
         Phase = SmuggleMissionPhase.Available;
         CarryElapsedSeconds = 0f;
         CooldownElapsedSeconds = 0f;
         return true;
     }
+
+    /// <summary>Deliver overload without NAP out-param (callers that ignore bonus).</summary>
+    public bool TryDeliver(PlayerWallet wallet) => TryDeliver(wallet, out _);
 
     /// <summary>
     /// Police LOS at pickup / while carrying → wanted +1 (cap 3) via shared meter.
