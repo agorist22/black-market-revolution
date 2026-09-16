@@ -12,7 +12,7 @@ public abstract class RiffFileTestBase<T> : IDisposable
     {
         if (!TestGamePath.TryGetRoot(out _, out var error))
         {
-            Assert.Skip(error ?? "OPENGTA2_PATH is not configured.");
+            Xunit.Assert.Skip(error ?? "OPENGTA2_PATH is not configured.");
         }
 
         _stream = TestGamePath.OpenFile(path);

@@ -45,3 +45,8 @@ Or open `OpenGta2.sln` in Visual Studio and F5.
 ## Week 1 smoke (crashers)
 
 Step-by-step PowerShell checklist (build → launch → map → move → quit) and `scripts/smoke-crashers.ps1`: see [SMOKE-WINDOWS.md](SMOKE-WINDOWS.md).
+
+
+## Runtime note
+
+The client targets **x64** (.NET Windows desktop). Install the x64 .NET 10 SDK/runtime (not only x86).
