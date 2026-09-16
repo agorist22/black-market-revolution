@@ -7,7 +7,7 @@ Black Market Revolution’s runtime foundation is **OpenGta2** (MonoGame Windows
 - Windows (x86 target / WindowsDX — **not Linux/macOS for the client**)
 - .NET SDK that supports `net10.0-windows` (see `src/OpenGta2.Client/OpenGta2.Client.csproj`)
 - A **legal** Grand Theft Auto 2 install (Steam / Rockstar Classics / retail)
-- User environment variable `OPENGTA2_PATH` pointing at the GTA2 install root (the folder that contains the game data files OpenGta2 reads)
+- User environment variable `OPENGTA2_PATH` pointing at the GTA2 install root (the folder that contains `data\\bil.gmp` / `data\\bil.sty` — not the Start Menu shortcuts folder)
 
 ## Setup
 
