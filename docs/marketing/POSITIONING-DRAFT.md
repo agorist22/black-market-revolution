@@ -52,7 +52,8 @@ Neon Market: earn your stake between polite State forms and a grey market that a
 Until Vega / Reed / Spike mark a milestone shippable:
 
 - Vertical-slice systems as “in the game now”
-- Named NPCs as live cast (e.g. Brandon Aragon). Roger Ver stays **non-NPC** — no “Free Roger” chrome; SEK3/Konkin quotes OK
+- Named NPCs as live cast (e.g. Brandon Aragon)
+- Roger Ver is **not** an NPC and not menu/store chrome (owner: free). Sal Mayweather stays in design pool (crypto-focused). SEK3/Konkin quotes OK
 - Dual-currency, wanted/faction, specific missions as shipped
 - Elections / city-dominance win states
 - Platforms, dates, wishlists, scores, or press quotes we did not earn

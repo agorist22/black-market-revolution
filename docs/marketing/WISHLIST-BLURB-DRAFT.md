@@ -34,7 +34,7 @@ First public look, when Reed clears it: one grey-market loop that has to feel go
 
 - [ ] Reed unfroze marketing after smoke  
 - [ ] No named NPCs as live
-- [ ] No “Free Roger” chrome; Roger Ver stays non-NPC (SEK3/Konkin OK)  
+- [ ] Roger Ver not cast as NPC / not menu chrome; Sal Mayweather + SEK3/Konkin OK  
 - [ ] No dual-currency / wanted / elections as shipped  
 - [ ] No invented dates, platforms, wishlists, scores, or quotes  
 - [ ] Echo skim if copy drifts into manifesto  
