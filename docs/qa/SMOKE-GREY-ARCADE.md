@@ -1,7 +1,7 @@
 # Smoke — Grey Arcade (OpenGta2 + grey-market slice)
 
 **Owner:** Spike (QA)  
-**Status:** Ready to execute when a Windows box has .NET 10 + a valid `OPENGTA2_PATH`  
+**Status:** Crashers **1–5 PASS**. VS-04/05/06/07 eyes-on **PASS** (2026-09-16 Prometheus). See results log for #6–13 gates.  
 **Scope:** Grey-market vertical slice only (The Grey Arcade). HUD / audio / marketing remain HOLD until Reed unfreezes.  
 **Report blockers to:** Reed · **Repros to:** Vega
 
@@ -91,23 +91,30 @@ Locks: **crypto only** · **one underground property** · **Smuggle-01** · Grey
 
 ---
 
+## Current gate (2026-09-16)
+
+- **#8 PARTIAL** — F3 grant only (no trader)
+- **#9 / #10 PARTIAL** — property + Smuggle-01 stubs (VS-05/06)
+- **#11 PARTIAL** — wanted/chase/arrest stubs (VS-07)
+- **#6 / #7 / #12 / #13 BLOCKED** — clip/cars, NAP (VS-08), full stability
+
 ## Results log
 
 | # | Result | Notes | Date / build |
 |---|--------|-------|----------------|
-| 1 | | | |
-| 2 | | | |
-| 3 | | | |
-| 4 | | | |
-| 5 | | | |
-| 6 | | | |
-| 7 | | | |
-| 8 | | | |
-| 9 | | | |
-| 10 | | | |
-| 11 | | | |
-| 12 | | | |
-| 13 | | | |
+| 1 | **PASS** | Full `dotnet build OpenGta2.sln` | 2026-09-16 Prometheus |
+| 2 | **PASS** | Client launches | 2026-09-16 |
+| 3 | **PASS** | GTA2 data path loads | 2026-09-16 |
+| 4 | **PASS** | Player + camera in world | 2026-09-16 |
+| 5 | **PASS** | Clean quit | 2026-09-16 |
+| 6 | **BLOCKED** | Grey Arcade clip walk not BMR-district verified | — |
+| 7 | **BLOCKED** | Car loop not in slice shell | — |
+| 8 | **PARTIAL** | Wallet live (VS-04); earn via **F3** only — no Crypto Trader | VS-04 |
+| 9 | **PARTIAL** | VS-05 PASS: F3→P→OWNED→+8/15s; F4 raid (BL contrast = Frame docs) | #30 |
+| 10 | **PARTIAL** | VS-06 PASS: M→I→O +120; F6 fail-while-carrying (proximity stubs) | #31 |
+| 11 | **PARTIAL** | VS-07 PASS: F5 pips, F7 chase/escape, F4 raid heat, 45s decay, F8 arrest×0.5 | #32 |
+| 12 | **BLOCKED** | NAP (VS-08) not landed | — |
+| 13 | **BLOCKED** | Full slice stability waits on #6/#7/#12 | — |
 
 **Linux partial (reference only, not item-1 PASS):** `OpenGta2.GameData` library build can PASS on Linux; full solution Client build is out of scope there.
 
