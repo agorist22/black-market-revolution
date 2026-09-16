@@ -183,3 +183,20 @@ When in doubt, redraw from silhouette rules + this palette.
 | Spike | Visual smoke against acceptance list |
 
 **v0 freeze:** Palette, HUD layout, and silhouette rules stay until after slice playtest A–H. Detail pass only inside those locks.
+
+---
+
+## 10. OWNER-VISION vs Week 1 (conflict stamp)
+
+Read `OWNER-VISION.md`. Pitch wins long-term; **Week 1 art stays on GREY-MARKET-SLICE locks** (do not reopen):
+
+| Owner ask | Week 1 art |
+|-----------|------------|
+| Dual fiat + crypto HUD | Crypto live; **fiat greyed/reserved** only (§3.2 / §6) |
+| Clear **market-influence** HUD bar | **Defer** — faction bar stays telemetry chrome; no market-bar craft in slice |
+| Elections / three politicians UI | **Out of Week 1** |
+| SEK3 quote + “Free Roger Ver” menu chrome | Menu/title later with Frame — **Roger is not an NPC** (no ped) |
+| Brandon Aragon / Sal Mayweather | Later special Agorist sprites — not slice placeholders |
+| GTA2 top-down, Statists vs Agorists | **Already locked** — State fringe vs Grey Arcade sodium/neon |
+
+Stability > fullscreen does not change sprite/HUD art. Detail pass only inside v0 freeze after smoke A–H.
