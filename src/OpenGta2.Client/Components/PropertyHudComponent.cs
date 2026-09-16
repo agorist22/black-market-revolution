@@ -1,5 +1,6 @@
 using System;
 using BlackMarketRevolution.Economy;
+using BlackMarketRevolution.Wanted;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -11,6 +12,7 @@ namespace OpenGta2.Client.Components;
 /// <summary>
 /// VS-05: underground property buy + income tick, plus BL <c>hud_property</c>
 /// per docs/ui/HUD-WIREFRAME-SLICE.md. Week 1 smoke uses debug hotkeys (no map marker).
+/// Raid procs raise shared <see cref="WantedMeter"/> (VS-07).
 /// </summary>
 public sealed class PropertyHudComponent : BaseDrawableComponent
 {
@@ -21,6 +23,7 @@ public sealed class PropertyHudComponent : BaseDrawableComponent
     private readonly Controls _controls;
     private readonly PlayerWallet _wallet;
     private readonly UndergroundProperty _property;
+    private readonly WantedMeter _wanted;
 
     private SpriteBatch? _spriteBatch;
     private SpriteFont? _font;
@@ -34,11 +37,13 @@ public sealed class PropertyHudComponent : BaseDrawableComponent
         GtaGame game,
         Controls controls,
         PlayerWallet wallet,
-        UndergroundProperty property) : base(game)
+        UndergroundProperty property,
+        WantedMeter wanted) : base(game)
     {
         _controls = controls;
         _wallet = wallet;
         _property = property;
+        _wanted = wanted;
     }
 
     public override void Initialize()
@@ -97,13 +102,14 @@ public sealed class PropertyHudComponent : BaseDrawableComponent
             }
         }
 
-        // F4 — force raid-risk stub while owned (wanted system is VS-07).
+        // F4 — force raid-risk while owned → Raise wanted (VS-07).
         if (_controls.IsKeyDown(Keys.F4) && _property.ForceRaidForDebug())
         {
+            var level = _wanted.Raise();
             _raidFlashSeconds = 2.5f;
-            DiagnosticValues.Set("property.raid", $"proc #{_property.RaidProcCount} (wanted stub)");
+            DiagnosticValues.Set("property.raid", $"proc #{_property.RaidProcCount} wanted={level}");
             Console.WriteLine(
-                $"[VS-05] Raid risk forced (#{_property.RaidProcCount}) — wanted hook deferred to VS-07");
+                $"[VS-05/07] Raid risk forced (#{_property.RaidProcCount}) → wanted {level}");
         }
 
         var paid = _property.Tick(dt, null, out var raidFired);
@@ -121,10 +127,11 @@ public sealed class PropertyHudComponent : BaseDrawableComponent
 
         if (raidFired)
         {
+            var level = _wanted.Raise();
             _raidFlashSeconds = 2.5f;
-            DiagnosticValues.Set("property.raid", $"proc #{_property.RaidProcCount} (wanted stub)");
+            DiagnosticValues.Set("property.raid", $"proc #{_property.RaidProcCount} wanted={level}");
             Console.WriteLine(
-                $"[VS-05] Raid risk proc #{_property.RaidProcCount} — wanted hook deferred to VS-07");
+                $"[VS-05/07] Raid risk proc #{_property.RaidProcCount} → wanted {level}");
         }
 
         if (_incomeFlashSeconds > 0f)
