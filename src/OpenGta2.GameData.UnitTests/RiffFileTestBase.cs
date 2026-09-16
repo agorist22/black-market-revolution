@@ -1,3 +1,4 @@
+using Xunit;
 using OpenGta2.GameData.Riff;
 
 namespace OpenGta2.Data.UnitTests;
