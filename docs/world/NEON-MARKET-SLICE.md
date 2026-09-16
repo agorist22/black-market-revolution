@@ -299,7 +299,7 @@ Read `docs/OWNER-VISION.md`. Pitch > old Grok code. Geography still **one clippe
 | Three politicians / two-option votes | **No** vote venues in clip | Out of Week 1 (ROADMAP P3) |
 | No instant faction win | No win-threshold geometry | Matches Sol telemetry-only scores |
 | HUD market bar | No world prop required | Eng/Frame after smoke |
-| SEK3 / Free Roger Ver | Place names only; **no Roger ped** | Menu chrome — Echo/Ink |
+| SEK3 / Konkin quote | Place names / district flavor only | Menu chrome = SEK3 only; **no** “Free Roger Ver”; Roger **not** an NPC / no ped |
 | Brandon Aragon + Sal Mayweather | **No** spawn points in Week 1 dump | Phase 4+ unlock geography |
 | Stability > fullscreen | One 2000×2000 clip | No map expansion for juice |
 
@@ -315,5 +315,6 @@ Read `docs/OWNER-VISION.md`. Pitch > old Grok code. Geography still **one clippe
 | 2026-09-16 | Sol reconcile: no hard conflicts. Soft patches — heat option A (scripted Toll Spur on cargo); Spike smuggle-first alt order. |
 | 2026-09-16 | Expand: spawn table, property AABB, Smuggle-01 waypoints 0–8, police seed notes (still one clip). |
 | 2026-09-16 | OWNER-VISION § stamp — Week 1 deferrals vs full pitch (no second district). |
+| 2026-09-16 | Owner update: drop Free Roger Ver chrome; SEK3 stays; no Roger ped. |
 
 *Frozen district. Placement tables above are the eng dump for Vega; Spike uses waypoints + playtest path. Geography edits need Reed.*
