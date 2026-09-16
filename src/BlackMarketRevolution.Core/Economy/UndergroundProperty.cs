@@ -5,7 +5,7 @@ namespace BlackMarketRevolution.Economy;
 /// <summary>
 /// VS-05 single underground business for the grey-market slice.
 /// See docs/GREY-MARKET-SLICE.md §5 and docs/BALANCE-GREY-ARCADE.md (P-01…P-05).
-/// Raid risk is a stub (wanted wiring is VS-07).
+/// Raid-risk procs are surfaced to callers; wire to <c>WantedMeter.Raise</c> (VS-07).
 /// </summary>
 public sealed class UndergroundProperty
 {
@@ -50,7 +50,7 @@ public sealed class UndergroundProperty
     /// <summary>
     /// Advance income / raid timers while owned.
     /// Returns crypto earned this call (0 or a multiple of <see cref="IncomeAmount"/>).
-    /// <paramref name="raidFired"/> is true when a raid-risk roll succeeds (wanted +1 deferred to VS-07).
+    /// <paramref name="raidFired"/> is true when a raid-risk roll succeeds (caller raises wanted).
     /// </summary>
     public int Tick(float deltaSeconds, Random? random, out bool raidFired)
     {

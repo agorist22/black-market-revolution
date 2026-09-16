@@ -1,12 +1,13 @@
 using BlackMarketRevolution.Economy;
 using BlackMarketRevolution.Slice;
+using BlackMarketRevolution.Wanted;
 
 namespace BlackMarketRevolution.Missions;
 
 /// <summary>
 /// VS-06 Smuggle-01 state machine: accept → pickup → carry (timer) → deliver / fail.
 /// See docs/GREY-MARKET-SLICE.md §6 and docs/BALANCE-GREY-ARCADE.md M-01…M-07.
-/// Wanted is a cheap stub (full police AI = VS-07).
+/// Wanted heat uses shared <see cref="WantedMeter"/> (VS-07).
 /// </summary>
 public sealed class SmuggleMission
 {
@@ -14,7 +15,13 @@ public sealed class SmuggleMission
     public const float TimeLimitSeconds = 240f;
     public const float RetryDelaySeconds = 60f;
     public const int WantedFailThreshold = 3;
-    public const int WantedMax = 3;
+
+    private readonly WantedMeter _wanted;
+
+    public SmuggleMission(WantedMeter wanted)
+    {
+        _wanted = wanted;
+    }
 
     public string Id { get; } = GreyMarketSliceIds.MissionSmuggle;
 
@@ -26,8 +33,8 @@ public sealed class SmuggleMission
     /// <summary>Seconds elapsed in post-fail cooldown.</summary>
     public float CooldownElapsedSeconds { get; private set; }
 
-    /// <summary>Slice wanted stub 0–3 (VS-07 owns real police). Fail if ≥3 while carrying.</summary>
-    public int WantedLevel { get; private set; }
+    /// <summary>Shared wanted level 0–3 via <see cref="WantedMeter"/>.</summary>
+    public int WantedLevel => _wanted.Level;
 
     public float TimeRemainingSeconds =>
         Phase == SmuggleMissionPhase.Carrying
@@ -79,15 +86,14 @@ public sealed class SmuggleMission
     }
 
     /// <summary>
-    /// Cheap heat stub: police LOS at pickup / while carrying → wanted +1 (cap 3).
+    /// Police LOS at pickup / while carrying → wanted +1 (cap 3) via shared meter.
     /// If wanted hits fail threshold while carrying, mission fails (no payout).
     /// </summary>
     public bool NotifyPoliceLos()
     {
-        if (WantedLevel < WantedMax)
-            WantedLevel++;
+        _wanted.Raise();
 
-        if (Phase == SmuggleMissionPhase.Carrying && WantedLevel >= WantedFailThreshold)
+        if (Phase == SmuggleMissionPhase.Carrying && _wanted.Level >= WantedFailThreshold)
         {
             Fail();
             return true;
@@ -109,8 +115,8 @@ public sealed class SmuggleMission
     /// <summary>Debug/smoke: set wanted directly (clamped). Fails mission if carrying and ≥3.</summary>
     public bool SetWantedForDebug(int level)
     {
-        WantedLevel = Math.Clamp(level, 0, WantedMax);
-        if (Phase == SmuggleMissionPhase.Carrying && WantedLevel >= WantedFailThreshold)
+        _wanted.SetLevelForDebug(level);
+        if (Phase == SmuggleMissionPhase.Carrying && _wanted.Level >= WantedFailThreshold)
         {
             Fail();
             return true;

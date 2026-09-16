@@ -119,15 +119,15 @@ public sealed class MissionHudComponent : BaseDrawableComponent
             }
         }
 
-        // F5 — wanted +1 stub (police LOS). Fails run if wanted hits 3 while carrying.
+        // F5 — police LOS → shared WantedMeter.Raise (VS-07). Fails run if wanted hits 3 while carrying.
         if (_controls.IsKeyDown(Keys.F5))
         {
             var failed = _mission.NotifyPoliceLos();
             DiagnosticValues.Set("mission.wanted", _mission.WantedLevel.ToString());
             Console.WriteLine(
                 failed
-                    ? $"[VS-06] Wanted {_mission.WantedLevel} — heat cooked the run (cooldown {SmuggleMission.RetryDelaySeconds:0}s)"
-                    : $"[VS-06] Wanted stub → {_mission.WantedLevel}");
+                    ? $"[VS-06/07] Wanted {_mission.WantedLevel} — heat cooked the run (cooldown {SmuggleMission.RetryDelaySeconds:0}s)"
+                    : $"[VS-06/07] Police LOS → wanted {_mission.WantedLevel}");
             if (failed)
                 BeginFailFlash("Heat cooked the run");
         }
