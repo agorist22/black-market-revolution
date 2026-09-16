@@ -173,4 +173,37 @@ Full economy / wanted / NAP tables live in `GREY-MARKET-SLICE.md` §13 — HUD d
 
 ---
 
+
+---
+
+## 10. Thin polish (Support unfreeze — VS-08+)
+
+Scope lock from Reed: **only** these two UI readability fixes. No inventory, minimap legend, mission chrome, or audio work in this pass.
+
+### 10.1 BL Property contrast (`hud_property`)
+
+Smoke (VS-05) showed `Property: —` / `OWNED` easy to miss under grey + debug noise.
+
+| Rule | Spec |
+|------|------|
+| Unowned | Label **Property** + em dash `—` at ≥ **85%** opacity; text luminance ≥ light-grey on dark panel (avoid mid-grey on 70% panel) |
+| Owned | **OWNED** in high-contrast fill (Ink: solid pip or bold weight); must read at a glance from BL |
+| Size | Keep ~200×24; do not grow into center clear zone |
+| Not in scope | Icons beyond a 16px pip; property name plate; income flash placement (already console-visible) |
+
+### 10.2 Debug overlay off TL glance
+
+FPS / `DrawOpaque` / diag lines must **not** sit on top of TL health / crypto / fiat.
+
+| Rule | Spec |
+|------|------|
+| Default debug anchor | **Top-center** or **below TL cluster** (y ≥ 112), never overlapping `hud_health` / `hud_crypto` / `hud_fiat` |
+| Toggle | Existing debug keys may show overlay; when shown, offset away from TL glance rect (12,12)–(232,100) |
+| Prod / smoke | Prefer debug **off** for eyes-on HUD smoke; if on, must clear TL |
+
+### 10.3 Vega ticket boundary
+
+One polish issue only: implement §10.1 + §10.2. No new HUD widgets.
+
+
 *End of draft. Ping Reed when merged to `docs/ui/`; craft tickets wait for smoke unfreeze.*
