@@ -87,6 +87,17 @@ public sealed class NapReputation
     public void SetValueForDebug(int value) =>
         Value = Math.Clamp(value, MinValue, MaxValue);
 
+    /// <summary>
+    /// VS-09: NAP → start, clear toast queue, harm flag, and <see cref="FeedbackEverShown"/>.
+    /// </summary>
+    public void ResetForDebug()
+    {
+        Value = StartValue;
+        CivilianHarmedThisRun = false;
+        FeedbackEverShown = false;
+        _toastQueue.Clear();
+    }
+
     /// <summary>Drain one toast for HUD flash. Returns false if queue empty.</summary>
     public bool TryDequeueToast(out string message)
     {

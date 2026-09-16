@@ -91,4 +91,14 @@ public sealed class UndergroundProperty
         RaidProcCount++;
         return true;
     }
+
+    /// <summary>VS-09: clear ownership and income/raid counters (ResetClearProperty).</summary>
+    public void ClearOwnershipForDebug()
+    {
+        Owned = false;
+        IncomeElapsedSeconds = 0f;
+        RaidElapsedSeconds = 0f;
+        IncomeTickCount = 0;
+        RaidProcCount = 0;
+    }
 }
