@@ -195,7 +195,8 @@ Read `OWNER-VISION.md`. Pitch wins long-term; **Week 1 art stays on GREY-MARKET-
 | Dual fiat + crypto HUD | Crypto live; **fiat greyed/reserved** only (§3.2 / §6) |
 | Clear **market-influence** HUD bar | **Defer** — faction bar stays telemetry chrome; no market-bar craft in slice |
 | Elections / three politicians UI | **Out of Week 1** |
-| SEK3 quote + “Free Roger Ver” menu chrome | Menu/title later with Frame — **Roger is not an NPC** (no ped) |
+| SEK3 / Konkin quote on menu chrome | Keep when menus land (Frame) |
+| Roger Ver | **Free — no “Free Roger Ver” menu/campaign chrome**; still **not an NPC** (no ped, no poster campaign) |
 | Brandon Aragon / Sal Mayweather | Later special Agorist sprites — not slice placeholders |
 | GTA2 top-down, Statists vs Agorists | **Already locked** — State fringe vs Grey Arcade sodium/neon |
 
