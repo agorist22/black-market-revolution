@@ -24,13 +24,19 @@ Market Revolution content so the game no longer depends on Rockstar assets.
 
 ## Build / run
 
-1. Install a current .NET SDK compatible with the solution in `OpenGta2.sln`.
-2. Obtain a legal GTA2 install and point the project at its data (see upstream
-   OpenGta2 docs / `gtadocs.md`).
-3. Open `OpenGta2.sln` and build, or use `dotnet build` from the repo root.
+**Client is Windows-only** (`net10.0-windows` + MonoGame WindowsDX). See
+**[docs/BUILD-WINDOWS.md](docs/BUILD-WINDOWS.md)** for cold-start steps and
+`OPENGTA2_PATH`.
 
-Upstream is early-stage — expect incomplete gameplay until we harden the shell
-and swap in BMR systems (dual currency, properties, NAP, factions).
+Short version:
+
+1. Windows machine + .NET SDK for `net10.0-windows`
+2. Legal GTA2 install; set user env `OPENGTA2_PATH` to that folder
+3. `dotnet build OpenGta2.sln` then run `src/OpenGta2.Client`
+
+Upstream OpenGta2 is early-stage. We harden the shell, then layer Black Market
+Revolution systems (dual currency, properties, NAP, factions) on the grey-market
+vertical slice (`docs/GREY-MARKET-SLICE.md`).
 
 ## Project docs
 
