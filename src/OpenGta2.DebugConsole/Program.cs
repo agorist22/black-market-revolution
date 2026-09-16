@@ -1,3 +1,4 @@
+using OpenGta2.DebugConsole;
 ﻿using OpenGta2.GameData.Map;
 using OpenGta2.GameData.Riff;
 

@@ -18,7 +18,7 @@ public static class TestGamePath
                     $"{EnvironmentVariableName} is not set. Point it at your legal GTA2 install root. See docs/BUILD-WINDOWS.md.");
             }
 
-            if (!Directory.Exists(path))
+            if (!System.IO.Directory.Exists(path))
             {
                 throw new DirectoryNotFoundException(
                     $"{EnvironmentVariableName} is set to '{path}', but that directory does not exist.");
