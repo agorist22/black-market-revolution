@@ -21,6 +21,7 @@ public class TestWorldScene : Scene
 
         Game.Services.ReplaceService(new PedManager());
         Game.Services.ReplaceService(new PlayerWallet());
+        Game.Services.ReplaceService(new UndergroundProperty());
 
         AddComponent<AudioTestComponent>();
         AddComponent<MapComponent>();
@@ -29,6 +30,7 @@ public class TestWorldScene : Scene
         AddComponent<PedManagerComponent>();
         AddComponent<CameraComponent>();
         AddComponent<WalletHudComponent>();
+        AddComponent<PropertyHudComponent>();
         AddComponent<DebuggingDrawingComponent>();
     }
 }
