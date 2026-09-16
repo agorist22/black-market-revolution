@@ -103,6 +103,8 @@ and a Windows machine.
 | [docs/PROJECT.md](docs/PROJECT.md) | Pitch & vertical slice |
 | [docs/ROADMAP.md](docs/ROADMAP.md) | Phases |
 | [docs/BACKLOG.md](docs/BACKLOG.md) | Prioritized backlog |
+| [docs/GREY-MARKET-SLICE.md](docs/GREY-MARKET-SLICE.md) | Grey-market vertical slice systems (Sol) |
+| [docs/BUILD-WINDOWS.md](docs/BUILD-WINDOWS.md) | Windows cold-start pointer |
 | [docs/WEEK-1.md](docs/WEEK-1.md) | Near-term plan |
 | [docs/DECISIONS.md](docs/DECISIONS.md) | Decision log |
 | [docs/FOUNDATIONS.md](docs/FOUNDATIONS.md) | Why OpenGta2 (and what we rejected) |
