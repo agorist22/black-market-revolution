@@ -28,6 +28,11 @@ public sealed class WantedMeter
     public bool ArrestFlashPending { get; private set; }
 
     /// <summary>
+    /// True if wanted was ever ≥ 1 this session (slice-complete flag). Cleared only by debug reset.
+    /// </summary>
+    public bool EverRaised { get; private set; }
+
+    /// <summary>
     /// Raise heat by <paramref name="amount"/> (default 1), clamped to <see cref="MaxLevel"/>.
     /// Marks LOS so decay does not immediately eat the new star.
     /// Returns the new level.
@@ -38,6 +43,8 @@ public sealed class WantedMeter
             return Level;
 
         Level = Math.Min(MaxLevel, Level + amount);
+        if (Level >= 1)
+            EverRaised = true;
         SetLos(true);
         return Level;
     }
@@ -47,11 +54,24 @@ public sealed class WantedMeter
     {
         Level = Math.Clamp(level, 0, MaxLevel);
         OutOfLosElapsedSeconds = 0f;
+        if (Level >= 1)
+            EverRaised = true;
         if (Level == 0)
         {
             ChaseEngaged = false;
             InLos = false;
         }
+    }
+
+    /// <summary>VS-09: wanted → 0, clear chase/LOS/flash, clear <see cref="EverRaised"/>.</summary>
+    public void ResetForDebug()
+    {
+        Level = 0;
+        OutOfLosElapsedSeconds = 0f;
+        InLos = false;
+        ChaseEngaged = false;
+        ArrestFlashPending = false;
+        EverRaised = false;
     }
 
     /// <summary>

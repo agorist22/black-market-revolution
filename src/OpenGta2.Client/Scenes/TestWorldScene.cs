@@ -1,3 +1,4 @@
+using BlackMarketRevolution.Slice;
 using BlackMarketRevolution.Economy;
 using BlackMarketRevolution.Missions;
 using BlackMarketRevolution.Nap;
@@ -23,13 +24,17 @@ public class TestWorldScene : Scene
         Game.Services.ReplaceService(Camera);
 
         Game.Services.ReplaceService(new PedManager());
-        Game.Services.ReplaceService(new PlayerWallet());
-        Game.Services.ReplaceService(new UndergroundProperty());
+        var wallet = new PlayerWallet();
+        Game.Services.ReplaceService(wallet);
+        var property = new UndergroundProperty();
+        Game.Services.ReplaceService(property);
         var wanted = new WantedMeter();
         Game.Services.ReplaceService(wanted);
         var nap = new NapReputation();
         Game.Services.ReplaceService(nap);
-        Game.Services.ReplaceService(new SmuggleMission(wanted, nap));
+        var mission = new SmuggleMission(wanted, nap);
+        Game.Services.ReplaceService(mission);
+        Game.Services.ReplaceService(new SliceDebugController(wallet, property, mission, wanted, nap));
 
         AddComponent<AudioTestComponent>();
         AddComponent<MapComponent>();
@@ -42,6 +47,7 @@ public class TestWorldScene : Scene
         AddComponent<MissionHudComponent>();
         AddComponent<WantedHudComponent>();
         AddComponent<NapHudComponent>();
+        AddComponent<SliceDebugHudComponent>();
         AddComponent<DebuggingDrawingComponent>();
     }
 }

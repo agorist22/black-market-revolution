@@ -50,6 +50,9 @@ public sealed class SmuggleMission
 
     public bool IsCarrying => Phase == SmuggleMissionPhase.Carrying;
 
+    /// <summary>Successful delivers this session (slice-complete). Cleared by debug reset.</summary>
+    public int SuccessCount { get; private set; }
+
     /// <summary>Accept / start when available (contact or Week 1 debug hotkey).</summary>
     public bool TryStart()
     {
@@ -88,6 +91,7 @@ public sealed class SmuggleMission
 
         wallet.AddCrypto(RewardCrypto);
         napBonusApplied = _nap.TryRewardCleanSmuggle();
+        SuccessCount++;
         Phase = SmuggleMissionPhase.Available;
         CarryElapsedSeconds = 0f;
         CooldownElapsedSeconds = 0f;
@@ -176,6 +180,17 @@ public sealed class SmuggleMission
         Phase = SmuggleMissionPhase.Cooldown;
         CarryElapsedSeconds = 0f;
         CooldownElapsedSeconds = 0f;
+    }
+
+    /// <summary>
+    /// VS-09: clear active/cooldown mission to Available and zero <see cref="SuccessCount"/>.
+    /// </summary>
+    public void ResetForDebug()
+    {
+        Phase = SmuggleMissionPhase.Available;
+        CarryElapsedSeconds = 0f;
+        CooldownElapsedSeconds = 0f;
+        SuccessCount = 0;
     }
 }
 
