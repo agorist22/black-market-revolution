@@ -1,6 +1,7 @@
-﻿using OpenGta2.Client.Components;
+using OpenGta2.Client.Components;
 using OpenGta2.Client.Diagnostics;
 using OpenGta2.Client.Peds;
+using BlackMarketRevolution.Economy;
 using OpenGta2.Client.Utilities;
 
 namespace OpenGta2.Client.Scenes;
@@ -20,12 +21,16 @@ public class TestWorldScene : Scene
 
         Game.Services.ReplaceService(new PedManager());
 
+        var wallet = new CryptoWallet();
+        Game.Services.AddService(wallet);
+
         AddComponent<AudioTestComponent>();
         AddComponent<MapComponent>();
         AddComponent<SpriteTestComponent>();
         AddComponent<PlayerControllerComponent>();
         AddComponent<PedManagerComponent>();
         AddComponent<CameraComponent>();
+        AddComponent<CryptoHudComponent>();
         AddComponent<DebuggingDrawingComponent>();
     }
 }

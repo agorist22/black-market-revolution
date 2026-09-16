@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net10.0-windows</TargetFramework>
@@ -36,6 +36,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OpenGta2.GameData\OpenGta2.GameData.csproj" />
+    <ProjectReference Include="..\BlackMarketRevolution.Core\BlackMarketRevolution.Core.csproj" />
   </ItemGroup>
 
   <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
