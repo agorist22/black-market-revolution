@@ -40,7 +40,7 @@ A fun, modern **GTA2-like** open-world game centered on an **Austrian-economics 
 ## Menu chrome
 
 - Keep **SEK3 / Konkin quote**
-- Keep **“Free Roger Ver”** text
+- **Do not** show “Free Roger Ver” (owner 2026-09-16: Roger Ver is free — remove that campaign chrome)
 - **Roger Ver is not an NPC**
 
 ## Special Agorist NPCs
@@ -61,6 +61,7 @@ A fun, modern **GTA2-like** open-world game centered on an **Austrian-economics 
 - “Remember that defending yourself doesn't violate the non-aggression principle NAP.”
 - “Change it to GTA2 - and leave out the technical details.”
 - “Roger Ver won't be an NPC.”
+- (Update) Remove “Free Roger Ver” menu text — he is free.
 - “This game must be very very good.”
 
 ## Resolved for studio (PM)
@@ -70,6 +71,7 @@ A fun, modern **GTA2-like** open-world game centered on an **Austrian-economics 
 | Perspective | **GTA2 top-down** (ignore temporary GTA3 aside) |
 | Sal Mayweather | **Keep** (later vision retains him; crypto-focused) |
 | Title in this repo | **Black Market Revolution** |
+| “Free Roger Ver” chrome | **Removed** (Roger is free) |
 | Numbers in pitch docs | Omit exact timers/prices unless in balance tables |
 
 ## Open / watch

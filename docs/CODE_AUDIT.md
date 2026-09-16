@@ -29,14 +29,14 @@ v2 screen target: **1280×720**; map **4000×4000**.
 - Missions
 - Minimap
 - Pause + save/load (pickle)
-- Special NPCs (Brandon Aragon, Roger Ver)
+- Special NPCs (Brandon Aragon, Sal Mayweather; older dumps also named Roger Ver — not shipping)
 - NAP reputation damage when attacking non-aggressors
 - Dual currency (fiat / crypto), mining, exchange
 - Property upgrades; tourism / crypto-mining property types
 - Wanted / police pressure patterns (inherited design)
 - Menu + main loop scaffolding
 
-(v1 also had: SpatialGrid, cars, traders/police, properties, economy manager with inflation/hurricanes/elections, tax evasion, assassins, inventory food heal, SEK3 quote / Free Roger Ver chrome — but is **not** the baseline.)
+(v1 also had: SpatialGrid, cars, traders/police, properties, economy manager with inflation/hurricanes/elections, tax evasion, assassins, inventory food heal, SEK3 quote / Free Roger Ver chrome (Free Roger Ver later removed — Roger is free) — but is **not** the baseline.)
 
 ## Critical bugs that block a clean run
 
