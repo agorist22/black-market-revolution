@@ -104,6 +104,7 @@ and a Windows machine.
 | [docs/ROADMAP.md](docs/ROADMAP.md) | Phases |
 | [docs/BACKLOG.md](docs/BACKLOG.md) | Prioritized backlog |
 | [docs/GREY-MARKET-SLICE.md](docs/GREY-MARKET-SLICE.md) | Grey-market vertical slice systems (Sol) |
+| [docs/world/NEON-MARKET-SLICE.md](docs/world/NEON-MARKET-SLICE.md) | Grey Arcade district blockout (Atlas) |
 | [docs/BUILD-WINDOWS.md](docs/BUILD-WINDOWS.md) | Windows cold-start pointer |
 | [docs/WEEK-1.md](docs/WEEK-1.md) | Near-term plan |
 | [docs/DECISIONS.md](docs/DECISIONS.md) | Decision log |
