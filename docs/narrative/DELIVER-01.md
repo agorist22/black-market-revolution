@@ -4,7 +4,7 @@
 **Display title:** Quiet Drop  
 **District:** The Grey Arcade  
 **Template:** Same accept → pickup → drop loop as Smuggle-01; **softer wanted fantasy** (Sol slice lock)  
-**Payout:** TBD — Sol softer than Smuggle +120; **do not invent a number** until balance doc says so  
+**Payout (Sol §4b / PR #11):** +60 crypto on success · fail = forfeit package (same 240s timer)  
 **Geography:** Reuse Grey Arcade markers; Service Alley is valid alt path flavor
 
 ---
@@ -14,7 +14,7 @@
 > **QUIET DROP** — Ledger Plaza  
 > Same bones as a smuggle: pickup, carry, drop. Lower profile. Prefer Service Alley if Neon Alley’s loud.  
 > **Risk:** Heat still exists — just don’t go looking for Toll Spur.  
-> **Payout:** Crypto on clean handoff (Sol sets the figure).  
+> **Payout:** +60 crypto on clean handoff.  
 > Be a courier, not a headline.
 
 ---
@@ -55,5 +55,5 @@
 
 ## Notes for eng / QA
 
-- Deliver-01 is flavor + softer heat framing until Sol publishes a distinct reward constant.
+- Deliver-01 payout locked at +60 crypto (Sol PR #11 §4b). No scripted Toll Spur chase by default; Week 1 smoke still prioritizes Smuggle-01.
 - Do not ship Deliver-01 as a second district or second property loop — same Grey Arcade clip only.
