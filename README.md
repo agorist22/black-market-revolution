@@ -110,6 +110,7 @@ and a Windows machine.
 | [docs/DECISIONS.md](docs/DECISIONS.md) | Decision log |
 | [docs/FOUNDATIONS.md](docs/FOUNDATIONS.md) | Why OpenGta2 (and what we rejected) |
 | [docs/CODE_AUDIT.md](docs/CODE_AUDIT.md) | Old Python prototype audit |
+| [docs/tech-art/ATLAS-PIPELINE.md](docs/tech-art/ATLAS-PIPELINE.md) | Ink tile/sprite export, atlas budgets, naming |
 
 ## Archive
 
