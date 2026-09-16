@@ -1,7 +1,7 @@
 # Smoke — Grey Arcade (OpenGta2 + grey-market slice)
 
 **Owner:** Spike (QA)  
-**Status:** Crashers **1–5 PASS**. VS-04/05/06/07 eyes-on **PASS** (2026-09-16 Prometheus). See results log for #6–13 gates.  
+**Status:** Crashers **1–5 PASS**. VS-04…08 **PASS** (2026-09-16). #8–11 PARTIAL; #12 PASS; #6/#7/#13 BLOCKED pending clip/cars + full stability.
 **Scope:** Grey-market vertical slice only (The Grey Arcade). HUD / audio / marketing remain HOLD until Reed unfreezes.  
 **Report blockers to:** Reed · **Repros to:** Vega
 
@@ -96,7 +96,8 @@ Locks: **crypto only** · **one underground property** · **Smuggle-01** · Grey
 - **#8 PARTIAL** — F3 grant only (no trader)
 - **#9 / #10 PARTIAL** — property + Smuggle-01 stubs (VS-05/06)
 - **#11 PARTIAL** — wanted/chase/arrest stubs (VS-07)
-- **#6 / #7 / #12 / #13 BLOCKED** — clip/cars, NAP (VS-08), full stability
+- **#12 PASS** — NAP (VS-08)
+- **#6 / #7 / #13 BLOCKED** — clip/cars + full stability
 
 ## Results log
 
@@ -113,8 +114,8 @@ Locks: **crypto only** · **one underground property** · **Smuggle-01** · Grey
 | 9 | **PARTIAL** | VS-05 PASS: F3→P→OWNED→+8/15s; F4 raid (BL contrast = Frame docs) | #30 |
 | 10 | **PARTIAL** | VS-06 PASS: M→I→O +120; F6 fail-while-carrying (proximity stubs) | #31 |
 | 11 | **PARTIAL** | VS-07 PASS: F5 pips, F7 chase/escape, F4 raid heat, 45s decay, F8 arrest×0.5 | #32 |
-| 12 | **BLOCKED** | NAP (VS-08) not landed | — |
-| 13 | **BLOCKED** | Full slice stability waits on #6/#7/#12 | — |
+| 12 | **PASS** | VS-08: load NAP 50; F9 −15 + toast; F10 −25; F5+F11 police = 0 delta; clean M→I→O +5 | #34 |
+| 13 | **BLOCKED** | Full slice stability waits on #6/#7 (clip/cars); NAP row #12 green | — |
 
 **Linux partial (reference only, not item-1 PASS):** `OpenGta2.GameData` library build can PASS on Linux; full solution Client build is out of scope there.
 
