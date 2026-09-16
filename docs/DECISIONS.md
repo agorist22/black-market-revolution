@@ -5,7 +5,7 @@ Status values: **Undecided** | **Provisional** | **Decided**. Seeded open items 
 | ID | Decision | Status | Options / notes | Outcome |
 |----|----------|--------|-----------------|---------|
 | D-01 | **Final game title** | Decided | Was Black Market Revolution / Black Market Economy | **Black Market Revolution** — designer: more marketable (2026-09-16) |
-| D-02 | **Vertical slice district / first playable loop** | Provisional | Which Neon Market district? Earn → buy property → one mission → wanted/NAP beat. Pick for Week 1. | **Agorist district / grey market first:** earn crypto or dirty fiat → illegal/mutual-aid property → one smuggle/deliver mission → wanted/NAP. |
+| D-02 | **Vertical slice district / first playable loop** | Provisional | Which Neon Market district? Earn → buy property → one mission → wanted/NAP beat. Pick for Week 1. | **Agorist district / grey market first** — see `GREY-MARKET-SLICE.md`: earn → one underground property → one smuggle → wanted + NAP. Currency locked separately in D-07. |
 | D-03 | **Solo vs needing collaborators** | Undecided | Stay solo through Phase 2 vs bring art/audio/design help for Phase 4+ | — |
 | D-04 | **Target platforms** | Undecided | Desktop only for now (Windows/Linux/macOS) vs later consoles/web. Prototype assumes desktop. | — |
 | D-05 | **Scope of combat** | Undecided | Keep light / mostly reactive & defensive (recommended by pillars) vs deeper shooter systems | — |
