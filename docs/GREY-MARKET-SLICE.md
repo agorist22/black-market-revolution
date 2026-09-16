@@ -233,6 +233,9 @@ Landmarks must read at GTA2 top-down scale; names/copy → Echo.
 
 ## 13. Balance summary (implementable table)
 
+**Full tables (authoritative numbers):** [`BALANCE-GREY-ARCADE.md`](BALANCE-GREY-ARCADE.md).
+
+
 | Constant | Value |
 |----------|------:|
 | `START_CRYPTO` | 80 |
