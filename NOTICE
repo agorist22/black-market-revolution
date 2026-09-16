@@ -1,0 +1,15 @@
+Black Market Revolution
+=======================
+
+Runtime foundation derived from OpenGta2
+https://github.com/ikkentim/OpenGta2
+Copyright (c) 2023 Tim Potze
+Licensed under the MIT License (see LICENSE).
+
+OpenGta2 (and this project while using its loaders) expects a legally obtained
+copy of Grand Theft Auto 2 for original game assets. Those assets are property
+of their respective owners (Rockstar Games / Take-Two) and are NOT redistributed
+in this repository.
+
+Black Market Revolution design, docs, and original content are separate from
+the OpenGta2 MIT code and from Rockstar assets.
