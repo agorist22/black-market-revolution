@@ -1,7 +1,7 @@
 # Audio Cue Sheet v0 — Grey-Market Slice
 
 **Owner:** Pulse (Audio Director)  
-**Status:** Offline prep — naming + cue IDs only (Reed HOLD on engine tickets until smoke lands)  
+**Status:** Narrow craft unfreeze (Reed) — wanted tick/stinger + NAP-break toast only; no scope creep  
 **Aligns:** `GREY-MARKET-SLICE.md` · Grey Arcade smoke path · middleware-light MonoGame (Vega)  
 **Out of scope:** FMOD/Wwise, cleared licensed music, full open-world beds, dual-currency UI SFX depth, engine PRs
 
@@ -13,7 +13,7 @@
 
 Stable cue IDs and naming so Vega can later hook a thin `AudioCue` table in OpenGta2 without renaming mid-slice. This doc is **not** an implementation ticket.
 
-When Reed unfreezes audio craft, implementation starts from these IDs — do not invent parallel names in code.
+Implementation starts from these IDs — do not invent parallel names in code. **Active craft:** §5 wanted tick/alert + §5b NAP-break toast (hooks that already fire on VS-07/08).
 
 ---
 
@@ -81,6 +81,18 @@ Escalate in **2–3 levels** only (matches readable heat, not a full heat ladder
 Duck `amb_*` under chase music; keep `ui_*` clear.
 
 ---
+
+
+## 5b. NAP break toast (priority 2 — active craft)
+
+Fired by VS-08 when the player breaks the NAP (unprovoked civ harm). Keep it short and readable over ambience — same bus family as UI.
+
+| Cue ID | Type | Loop | Trigger | Notes |
+|--------|------|------|---------|-------|
+| `ui_nap_break` | ui | no | Unprovoked NAP violation toast | Soft “you broke the code” tick under Frame’s toast |
+| `stinger_nap_break` | stinger | no | Same event (optional layer) | Slightly heavier bump if toast alone is too quiet; do **not** play both loud |
+
+**Active thin pack (Reed unfreeze):** play `ui_wanted_tick` on wanted 0→1+, `stinger_wanted_alert` on first alert / chase engage, and `ui_nap_break` (or soft `stinger_nap_break`) on NAP-break toast. Chase beds (`mus_wanted_chase_*`) stay nice-after unless Vega has free loop bandwidth.
 
 ## 6. Market ambience — State vs Counter-Economy (priority 3)
 
@@ -154,11 +166,12 @@ Play/stop/fade by `Id`. Category drives bus routing and ducking.
 
 **Must-have for first audible Grey Arcade pass**
 
-1. Car: idle, cruise, collision, horn  
-2. Wanted: tick, alert stinger, chase_1  
-3. Ambience: `amb_market_chaos` (state bed can wait one beat)  
-4. UI: buy confirm, funds deny, mission accept  
-5. Mission: success + fail stingers  
+1. **Active (Reed thin unfreeze):** `ui_wanted_tick`, `stinger_wanted_alert`, `ui_nap_break`  
+2. Car: idle, cruise, collision, horn  
+3. Wanted chase bed: `mus_wanted_chase_1` (nice-after if loops are heavy)  
+4. Ambience: `amb_market_chaos` (state bed can wait one beat)  
+5. UI: buy confirm, funds deny, mission accept  
+6. Mission: success + fail stingers  
 
 **Nice-after**
 
@@ -176,17 +189,21 @@ Play/stop/fade by `Id`. Category drives bus routing and ducking.
 | **Ink** | Tone pass: State order vs neon chaos character |
 | **Echo** | Narrative moments that need a sting (briefing copy, faction lines) |
 | **Frame** | UI events that fire `ui_*` (confirm / deny / wanted tick) |
-| **Vega** | Cue table + play calls — **only after Reed unfreezes** |
+| **Vega** | Thin play calls for active craft IDs (see §5 / §5b) — one small hook ticket |
 | **Spike** | No audio gate on smoke 1–13; audible pass is post-smoke |
 
 ---
 
-## 12. Explicit non-goals (this PR)
+## 12. Explicit non-goals
 
-- No MonoGame / OpenGta2 code changes  
-- No Vega implementation tickets from this file  
+- No full audio middleware / FMOD  
+- No car / market / mission pack in this unfreeze (wanted tick + NAP toast only)  
 - No store-page / trailer audio promises (Beacon HOLD)  
 - No copyrighted temp tracks checked into the repo  
+
+## 12b. Thin Vega ticket (active)
+
+One small eng ask when needed: play-by-id for `ui_wanted_tick`, `stinger_wanted_alert`, `ui_nap_break` on the existing VS-07/08 events (wanted pip up / alert engage / NAP-break toast). Placeholder CC0 one-shots OK. No new systems beyond a tiny cue map + Play(id).
 
 ---
 
@@ -195,3 +212,4 @@ Play/stop/fade by `Id`. Category drives bus routing and ducking.
 | Ver | Date | Notes |
 |-----|------|-------|
 | v0 | 2026-09-16 | Initial naming + Grey Arcade cue IDs (Pulse) |
+| v0.1 | 2026-09-16 | Narrow unfreeze: wanted tick/alert + NAP-break toast; thin Vega hook note |
