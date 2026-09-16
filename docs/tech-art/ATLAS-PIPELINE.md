@@ -1,8 +1,7 @@
 # Atlas / export pipeline — Ink → MonoGame / OpenGta2
 
 **Audience:** Ink (art), Forge (TA), Vega (engine), Bolt (tools)  
-**Repo rule:** no Rockstar / GTA2 binaries, `.sty`, `.GMP`, or ripped sheets in git. Legal GTA2 is runtime-only via `OPENGTA2_PATH` until BMR-owned content replaces it.  
-**Art-side defaults:** folders + naming **LOCKED** by Ink (2026-09-16) — see below.
+**Repo rule:** no Rockstar / GTA2 binaries, `.sty`, `.GMP`, or ripped sheets in git. Legal GTA2 is runtime-only via `OPENGTA2_PATH` until BMR-owned content replaces it.
 
 This is the contract for how Ink’s sprites and tiles become something Vega can load without drama.
 
@@ -71,83 +70,63 @@ Unique remaps multiply textures. Prefer one base + remap rows over full re-paint
 | Rule | Value |
 |------|-------|
 | Point lights | **`MAX_LIGHTS = 16`** in `BlockFaceEffect.fx` |
-| Art implication | **Cluster light sources**; design for ≤16 point lights (no per-window lights); bake emissive into tiles where possible; slice prefers ≤8 active in view |
+| Art implication | Cluster neon; bake emissive into tiles where possible; ≤8 active in view for the slice |
 
 ---
 
-## Folders & naming (**LOCKED** — Ink, 2026-09-16)
+## Naming conventions
 
-Ship these as-is. If Vega later wants a different export root, keep **`art/source/`** stable and only move **`art/export/`**.
-
-### Source folders
-
-```
-art/source/tiles/<set>/     # set = state | neon | shared | road | prop
-art/source/sprites/<kind>/  # kind = car | ped | codeobj | mapobj | user | font
-art/source/remap/
-art/source/ui/              # HUD/menus — out of .sty packs unless Eng says otherwise
-art/export/pages/           # packed 256×256 pages only
-```
-
-Rules:
-
-- Never commit loose world PNGs as playable maps; playable atlas pages live under `art/export/pages/` only.
-- State vs neon = **set folders + remaps**, not separate engine hacks.
-- CC0 / original only — no Rockstar assets.
-- Built packs and anything from a GTA2 install stay **gitignored** / out of repo.
+All exports are **original BMR art**. Prefix `bmr_` keeps packs greppable and CI-friendly.
 
 ### Tiles
 
 ```
-bmr_<set>_<name>_64.png
+bmr_tile_<set>_<name>.png
 ```
-
-- Always **64×64**, indexed, **index 0 = transparent**
-- `<set>` ∈ `state` | `neon` | `shared` | `road` | `prop`
-- snake_case, ASCII, no spaces
 
 Examples:
 
-- `bmr_road_asphalt_01_64.png`
-- `bmr_neon_shop_facade_a_64.png`
-- `bmr_shared_sidewalk_01_64.png`
+- `bmr_tile_greyroad_asphalt_01.png`
+- `bmr_tile_facade_neon_shop_a.png`
+
+Rules:
+
+- Base resolution **64×64** (or exact integer multiple for source masters, export at 64)
+- `<set>` = district or material family (`greyroad`, `facade`, `alley`, …)
+- snake_case, ASCII, no spaces
+- Do not encode palette index in the filename
 
 ### Sprites
 
 ```
-bmr_<kind>_<name>_<frame>.png
+bmr_<kind>_<name>_<anim>_<frame>.png
 ```
 
-- `<kind>` ∈ `car` | `ped` | `codeobj` | `mapobj` | `user` | `font` (lowercase; matches engine `SpriteKind`)
-- `<frame>` = **3-digit** zero-padded (`000`, `001`, …)
-- width/height ≤ **255**
+- `<kind>` ∈ `car` | `ped` | `codeobj` | `mapobj` | `user` | `font`
+- `<anim>` = `idle` | `walk` | `drive` | … (or `static` for single frame)
+- `<frame>` = zero-padded `00`, `01`, …
 
 Examples:
 
-- `bmr_ped_courier_000.png`
-- `bmr_car_van_000.png`
-- `bmr_mapobj_crate_000.png`
+- `bmr_ped_player_walk_00.png`
+- `bmr_car_courier_van_static_00.png`
+- `bmr_mapobj_drop_crate_static_00.png`
 
 ### Remaps
 
-Same stem as the base frame + `_remap_<id>`:
+Same pixel silhouette; only remap-friendly indices change.
 
 ```
-bmr_<kind>_<name>_<frame>_remap_<id>.png
+bmr_<kind>_<name>_remap_<id>.png
 ```
 
-Example: `bmr_ped_courier_000_remap_01.png`
-
-Same silhouette; only remap-friendly indices change (State vs neon coat/faction tint).
-
-### UI (not .sty)
+Or (preferred once packer exists): **one base sprite** + a palette-row sheet:
 
 ```
-bmr_ui_<screen>_<element>.png
+bmr_<kind>_<name>_palettes.png
 ```
 
-Example: `bmr_ui_hud_wanted.png`  
-Lives under `art/source/ui/`. Stays out of style packs unless Eng says otherwise.
+Document which indices are remap slots in the manifest. Until then, explicit `_remap_<id>` files are fine.
 
 ### Manifest (proposed sidecar)
 
@@ -162,18 +141,33 @@ Minimal fields (proposed — Bolt may rename):
   "packId": "bmr_grey_market_v0",
   "tileSize": 64,
   "spritePageSize": 256,
-  "tiles": [{ "file": "bmr_road_asphalt_01_64.png", "set": "road", "id": 0 }],
+  "tiles": [{ "file": "bmr_tile_greyroad_asphalt_01.png", "id": 0 }],
   "sprites": [{
-    "file": "bmr_ped_courier_000.png",
+    "file": "bmr_ped_player_walk_00.png",
     "kind": "ped",
-    "name": "courier",
+    "name": "player",
+    "anim": "walk",
     "frame": 0
   }],
-  "notes": "No Rockstar content. Index 0 transparent. Paths per ATLAS-PIPELINE."
+  "notes": "No Rockstar content. Index 0 transparent."
 }
 ```
 
-Packer output may be `.sty`-shaped binary; the JSON is the **authoring** source of truth. Packed pages land in `art/export/pages/`.
+Packer output may be `.sty`-shaped binary; the JSON is the **authoring** source of truth.
+
+### Folders (source tree; not committed game data)
+
+Suggested authoring layout (git-safe masters only if licensed/original; prefer LFS or art remote if heavy):
+
+```
+art/
+  tiles/<set>/
+  sprites/<kind>/<name>/
+  remaps/
+  manifests/
+```
+
+Built packs and anything derived from a GTA2 install stay **gitignored** / out of repo.
 
 ---
 
@@ -202,9 +196,8 @@ Exact frame counts lock after Vega confirms camera zoom.
 4. **Silhouette reads** at top-down GTA2-like zoom (thick shapes, high local contrast).
 5. **Remaps** share value structure; only coat/faction indices change.
 6. **Names** match this doc; no `gta2_`, `rockstar_`, or retail asset filenames.
-7. **Masters** live under `art/source/…`; packed **256×256 pages** only under `art/export/pages/`.
+7. **Masters** may be higher-res layered files; **exports** are the sized, indexed PNGs above.
 8. Hand Forge/Bolt a manifest row (or updated `bmr_*.atlas.json`) with every new ID.
-9. UI stays `bmr_ui_*` under `art/source/ui/` — not in .sty unless Eng says so.
 
 ---
 
@@ -227,8 +220,7 @@ Bolt/CI ideas — mark implemented only when wired:
 | AT-01 | Stay `.sty`-shaped vs new BMR pack format? | `.sty`-shaped until slice ships |
 | AT-02 | Who implements the packer? | Bolt tools + Vega load; Forge specs |
 | AT-03 | Camera zoom / ped pixel size? | Measure in `TestWorld`; then freeze frame budgets |
-| AT-04 | Commit PNG masters to git vs art remote? | Small placeholders under `art/source/` OK; heavy masters external |
-| AT-05 | Export root path | Keep `art/source/` stable; only `art/export/` may move if Vega asks |
+| AT-04 | Commit PNG masters to git vs art remote? | Small placeholders in repo OK; heavy masters external |
 
 ---
 
