@@ -1,5 +1,6 @@
 using BlackMarketRevolution.Economy;
 using BlackMarketRevolution.Missions;
+using BlackMarketRevolution.Nap;
 using BlackMarketRevolution.Wanted;
 using OpenGta2.Client.Components;
 using OpenGta2.Client.Diagnostics;
@@ -26,7 +27,9 @@ public class TestWorldScene : Scene
         Game.Services.ReplaceService(new UndergroundProperty());
         var wanted = new WantedMeter();
         Game.Services.ReplaceService(wanted);
-        Game.Services.ReplaceService(new SmuggleMission(wanted));
+        var nap = new NapReputation();
+        Game.Services.ReplaceService(nap);
+        Game.Services.ReplaceService(new SmuggleMission(wanted, nap));
 
         AddComponent<AudioTestComponent>();
         AddComponent<MapComponent>();
@@ -38,6 +41,7 @@ public class TestWorldScene : Scene
         AddComponent<PropertyHudComponent>();
         AddComponent<MissionHudComponent>();
         AddComponent<WantedHudComponent>();
+        AddComponent<NapHudComponent>();
         AddComponent<DebuggingDrawingComponent>();
     }
 }

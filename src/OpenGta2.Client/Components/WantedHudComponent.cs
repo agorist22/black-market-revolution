@@ -13,7 +13,7 @@ namespace OpenGta2.Client.Components;
 
 /// <summary>
 /// VS-07: top-right <c>hud_wanted</c> heat pips (0–3) per HUD-WIREFRAME-SLICE.md,
-/// plus chase/arrest smoke hotkeys. NAP is VS-08 — not drawn here.
+/// plus chase/arrest smoke hotkeys. NAP Rep is drawn by NapHudComponent (VS-08).
 /// </summary>
 public sealed class WantedHudComponent : BaseDrawableComponent
 {
