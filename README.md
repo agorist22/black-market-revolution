@@ -24,13 +24,77 @@ Market Revolution content so the game no longer depends on Rockstar assets.
 
 ## Build / run
 
-1. Install a current .NET SDK compatible with the solution in `OpenGta2.sln`.
-2. Obtain a legal GTA2 install and point the project at its data (see upstream
-   OpenGta2 docs / `gtadocs.md`).
-3. Open `OpenGta2.sln` and build, or use `dotnet build` from the repo root.
+Cold-start checklist for a clean machine. Week 1 Definition of Done is **documented
+build**, not a full client playtest.
 
-Upstream is early-stage — expect incomplete gameplay until we harden the shell
-and swap in BMR systems (dual currency, properties, NAP, factions).
+### Requirements
+
+- **.NET 10 SDK** — solution targets `net10.0` / `net10.0-windows`. There is no
+  `global.json` yet; use whatever current .NET 10 SDK restores cleanly
+  (`dotnet --version` should report 10.x). Pin a `global.json` once a known-good
+  SDK is confirmed on a Windows box.
+- **Windows** for `OpenGta2.Client` — that project is `net10.0-windows`, x86,
+  MonoGame **WindowsDX** + WinForms. The full game client will not build/run on
+  Linux/macOS today.
+- Other projects (`OpenGta2.GameData`, `OpenGta2.GameData.UnitTests`,
+  `OpenGta2.DebugConsole`) target `net10.0` and may build outside Windows once
+  the SDK is installed.
+- A **legal GTA 2** install to **run** the client (Steam / Rockstar Classics /
+  retail). See also `gtadocs.md`. **Do not** commit Rockstar/GTA2 binaries or
+  assets.
+
+### Build
+
+From the repo root:
+
+```bash
+dotnet restore OpenGta2.sln
+dotnet build OpenGta2.sln -c Debug
+```
+
+Libraries / tests only (no Windows client):
+
+```bash
+dotnet build src/OpenGta2.GameData/OpenGta2.GameData.csproj -c Debug
+dotnet test src/OpenGta2.GameData.UnitTests/OpenGta2.GameData.UnitTests.csproj -c Debug
+```
+
+Or open `OpenGta2.sln` in Visual Studio on Windows.
+
+### GTA2 data path (`OPENGTA2_PATH`)
+
+`TestGamePath` (Client and DebugConsole) reads the **user** environment variable
+`OPENGTA2_PATH` and expects an absolute path to the GTA2 data directory.
+
+**Current behavior:** if `OPENGTA2_PATH` is unset, path lookup null-forgives and
+will **NRE** at runtime. Set the variable before `dotnet run`. Hardening
+(process env, optional gitignored local config, loud failure) is in progress —
+do not rely on a silent default.
+
+Example (Windows PowerShell, user scope):
+
+```powershell
+[Environment]::SetEnvironmentVariable("OPENGTA2_PATH", "C:\Path\To\GTA2", "User")
+```
+
+Example (process scope for one shell):
+
+```powershell
+$env:OPENGTA2_PATH = "C:\Path\To\GTA2"
+```
+
+Never commit a machine-specific path or game files.
+
+### Run (Windows + data present)
+
+```bash
+dotnet run --project src/OpenGta2.Client/OpenGta2.Client.csproj -c Debug
+```
+
+Upstream OpenGta2 is early-stage. Expect incomplete gameplay until we harden the
+shell and swap in Black Market Revolution systems (dual currency, properties,
+NAP, factions). Full smoke playtest stays gated on a confirmed legal GTA2 copy
+and a Windows machine.
 
 ## Project docs
 
