@@ -1,4 +1,5 @@
-﻿using OpenGta2.Client.Components;
+using BlackMarketRevolution.Economy;
+using OpenGta2.Client.Components;
 using OpenGta2.Client.Diagnostics;
 using OpenGta2.Client.Peds;
 using OpenGta2.Client.Utilities;
@@ -19,6 +20,7 @@ public class TestWorldScene : Scene
         Game.Services.ReplaceService(Camera);
 
         Game.Services.ReplaceService(new PedManager());
+        Game.Services.ReplaceService(new PlayerWallet());
 
         AddComponent<AudioTestComponent>();
         AddComponent<MapComponent>();
@@ -26,6 +28,7 @@ public class TestWorldScene : Scene
         AddComponent<PlayerControllerComponent>();
         AddComponent<PedManagerComponent>();
         AddComponent<CameraComponent>();
+        AddComponent<WalletHudComponent>();
         AddComponent<DebuggingDrawingComponent>();
     }
 }
