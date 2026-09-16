@@ -65,7 +65,7 @@ Full 4000×4000
 | Pickup point | **Wharf Pickup** | `(960, 3640)` | 140×100 bay | Enter radius + interact |
 | Drop point | **Alley Drop** | `(1480, 3360)` | 80×80 | End of Neon Alley |
 | Buyable building | **Underground Stack** | `(880, 3180)` | 160×200 | Price 150; OWNED state |
-| Police spawn / patrol | **Toll Spur gate** | `(640, 2180)` | 200×80 | Wanted chase seed |
+| Police spawn / patrol | **Toll Spur gate** | gate `(640, 2180)` · **POLICE_SEED** `(640, 2220)` | 200×80 | Eng uses POLICE_SEED for chase |
 | Soft bounds | Clip AABB | — | — | See above |
 
 **Collision:** Landmark footprints solid except Plaza floor and Neon Alley roadbed. Keep **≥64 px** driveable lane E–W through Plaza and through Alley.
@@ -122,32 +122,129 @@ y↑ toward rest of city / State
 
 ---
 
+
+---
+
+## Spawn points (Week 1)
+
+All positions are world px on the parent 4000×4000 map, **inside** the Grey Arcade clip only.
+
+| Id | Role | Position | Facing | Notes |
+|----|------|----------|--------|-------|
+| `SPAWN_PLAYER` | Player / arrest return | `(480, 2920)` | East (+x) | West of Ledger Plaza |
+| `SPAWN_TRADER` | Street earn NPC | `(280, 2760)` | South | Interact radius **48** |
+| `SPAWN_CONTACT` | Smuggle-01 accept | `(760, 2840)` | West | On Plaza; Echo owns lines |
+| `SPAWN_CIV_A` | Neutral civilian (NAP test) | `(640, 2900)` | Random | Optional; Plaza only |
+| `SPAWN_CIV_B` | Neutral civilian | `(1000, 3120)` | Random | Near Stack approach |
+| `SPAWN_CAR_FRINGE` | Optional parked car | `(1400, 2300)` | West | Fringe Lots |
+| `SPAWN_CAR_WHARF` | Optional parked car | `(1100, 3700)` | North | Near pickup |
+
+**Arrest / fail return:** always `SPAWN_PLAYER` (Sol soft-fail → hub).
+
+---
+
+## Property location (Underground Stack)
+
+| Field | Value |
+|-------|------:|
+| Id | `PROP_UNDERGROUND_01` |
+| Landmark | Underground Stack |
+| Interact / buy marker | `(880, 3180)` |
+| Building AABB (solid) | `(800, 3080)` → `(960, 3280)` |
+| Loading door (OWNED flash / drop adjacency OK) | `(920, 3280)` |
+| Buy price / income | Sol / `BALANCE-GREY-ARCADE` — **150** crypto · **+8 / 15s** |
+| Raid risk volume | Same as building AABB (Sol 12% / 90s) |
+
+Only **one** buyable footprint in the slice. No mutual-aid building.
+
+---
+
+## Smuggle-01 route waypoints
+
+Primary path is a polyline for nav hints / Spike timing. Corridor width **≥80** along Neon Alley.
+
+| # | Waypoint id | Position | Purpose |
+|---|-------------|----------|---------|
+| 0 | `WP_ACCEPT` | `(760, 2840)` | Mission start (contact) |
+| 1 | `WP_PLAZA_EXIT` | `(920, 2960)` | Leave Plaza toward Stack/Wharf |
+| 2 | `WP_STACK_CORNER` | `(1000, 3200)` | Pass Underground Stack |
+| 3 | `WP_WHARF_APPROACH` | `(1000, 3480)` | Approach bay |
+| 4 | `WP_PICKUP` | `(960, 3640)` | Pickup interact (cargo on) |
+| 5 | `WP_ALLEY_ENTER` | `(1180, 3000)` | Enter Neon Alley north mouth |
+| 6 | `WP_ALLEY_MID` | `(1340, 3180)` | Mid corridor |
+| 7 | `WP_ALLEY_BEND` | `(1500, 3320)` | Bend toward drop |
+| 8 | `WP_DROP` | `(1480, 3360)` | Drop interact (payout) |
+
+**Suggested order after accept:** 0 → 1 → 2 → 3 → 4 (pickup) → 5 → 6 → 7 → 8 (drop).  
+Players may free-roam; waypoints are for markers, breadcrumb optional, and smoke timing — not a railroad.
+
+**Secondary (Service Alley):** `(1100, 2720)` → `(1500, 2800)` → join at `WP_ALLEY_ENTER`. Keep clear; do not mark as primary.
+
+**Interact radii (defaults):** contact / trader / buy / pickup / drop = **48** px unless OpenGta2 collide needs larger.
+
+---
+
+## Police spawn notes (Toll Spur)
+
+| Field | Value |
+|-------|-------|
+| Heat model | **Option A** — scripted chase when **cargo flag on** |
+| `POLICE_SEED` | `(640, 2220)` — **source of truth** for chase spawn |
+| Gate visual center | `(640, 2180)` — prop only; do not spawn chase here if it differs from seed |
+| `ZONE_TOLL_SPUR` | AABB `(400, 2000)`–`(900, 2360)` — State fringe / heat volume |
+| Week 1 count | **1** officer on cargo-on wanted rise; no Wharf-dedicated officer |
+| Patrol (optional idle) | Seed → south to `(640, 2500)` and back; must **not** be required for smoke |
+| Chase target | Player; engage once for VS-07 |
+| Natural Wharf LOS | Nice-to-have only if patrol reaches bay — **not** acceptance |
+
+@Ink: Toll Spur reads **sodium / cold State**; Arcade south of ~y=2600 reads **neon** — border should flip without a second tile language (your bible).
+
+
 ## Blockout placement list (copy into code)
 
 ```text
-# Clip
+# Clip — one district only
 CLIP_MIN = (0, 2000)
 CLIP_MAX = (2000, 4000)
 
-# Hub
-SPAWN = (480, 2920)
+# Spawns
+SPAWN_PLAYER     = (480, 2920)
+SPAWN_TRADER     = (280, 2760)
+SPAWN_CONTACT    = (760, 2840)
+SPAWN_CIV_A      = (640, 2900)   # optional NAP target
+SPAWN_CIV_B      = (1000, 3120)
+SPAWN_CAR_FRINGE = (1400, 2300)
+SPAWN_CAR_WHARF  = (1100, 3700)
 
-# Sol §11 markers (centers)
-MARKER_TRADER   = (280, 2760)   # street earn
-MARKER_CONTACT  = (760, 2840)   # Smuggle-01 accept
-MARKER_PROPERTY = (880, 3180)   # underground buy
-MARKER_PICKUP   = (960, 3640)   # smuggle pickup
-MARKER_DROP     = (1480, 3360)  # smuggle drop
+# Property
+MARKER_PROPERTY      = (880, 3180)
+PROP_AABB_MIN        = (800, 3080)
+PROP_AABB_MAX        = (960, 3280)
+PROP_LOADING_DOOR    = (920, 3280)
 
-# Wanted / police
-ZONE_TOLL_SPUR = (400, 2000, 900, 2360)  # x0,y0,x1,y1
-POLICE_SEED    = (640, 2220)
+# Smuggle markers + waypoints
+MARKER_TRADER = SPAWN_TRADER
+MARKER_CONTACT = SPAWN_CONTACT
+MARKER_PICKUP = (960, 3640)
+MARKER_DROP   = (1480, 3360)
+WP = [
+  (760, 2840),   # 0 accept
+  (920, 2960),   # 1 plaza exit
+  (1000, 3200),  # 2 stack corner
+  (1000, 3480),  # 3 wharf approach
+  (960, 3640),   # 4 pickup
+  (1180, 3000),  # 5 alley enter
+  (1340, 3180),  # 6 alley mid
+  (1500, 3320),  # 7 alley bend
+  (1480, 3360),  # 8 drop
+]
 
-# Soft Agorist core (lower police density)
+# Police
+ZONE_TOLL_SPUR   = (400, 2000, 900, 2360)
+POLICE_SEED      = (640, 2220)  # chase spawn SOI
+GATE_VISUAL      = (640, 2180)
 ZONE_ARCADE_CORE = (200, 2600, 1600, 3800)
 ```
-
-**Cars (optional):** Fringe Lots ~`(1400, 2300)`; Wharf ~`(1100, 3700)`.
 
 ---
 
@@ -174,6 +271,7 @@ Walk budget without car ~6–8 min for mission geography; full fantasy ≤15.
 - State = cold blue/white at Toll Spur; Arcade = magenta/amber.  
 - Underground Stack needs clear **for-sale → OWNED** read.  
 - Do not block Plaza or Alley drive lanes.
+- District border (~y=2600 / Toll Spur): **sodium State** north vs **neon Arcade** south — one tile language, palette flip only (@Ink bible).
 
 ---
 
@@ -193,5 +291,6 @@ Walk budget without car ~6–8 min for mission geography; full fantasy ≤15.
 | 2026-09-16 | Reconciled to Sol `GREY-MARKET-SLICE.md`: underground property (not mutual-aid); trader + contact + pickup/drop markers; crypto-only; Smuggle-01 route; §11 checklist coverage |
 | 2026-09-16 | **Frozen** on Reed order after Sol systems doc landed on `main` (PR #3). Hand-off to Vega: clip + markers only. |
 | 2026-09-16 | Sol reconcile: no hard conflicts. Soft patches — heat option A (scripted Toll Spur on cargo); Spike smuggle-first alt order. |
+| 2026-09-16 | Expand: spawn table, property AABB, Smuggle-01 waypoints 0–8, police seed notes (still one clip). |
 
-*Frozen. Vega implements clip + markers from the blockout list below. Spike uses the playtest path. Geography edits need Reed.*
+*Frozen district. Placement tables above are the eng dump for Vega; Spike uses waypoints + playtest path. Geography edits need Reed.*
