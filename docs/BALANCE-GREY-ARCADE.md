@@ -64,6 +64,22 @@ Success while wanted ≥ 1 still pays (heat already priced).
 
 ---
 
+
+---
+
+## 4b. Deliver-01 rewards / fail (soft alternate)
+
+Same accept → pickup → drop template as Smuggle-01; **lower payout, softer heat** (no scripted Toll Spur cargo chase by default).
+
+| ID | Constant | Value | Notes |
+|----|----------|------:|-------|
+| D-01 | `DELIVER_REWARD` | **60** | Crypto on successful drop (half of smuggle) |
+| D-02 | `DELIVER_FAIL_PENALTY` | **0** (forfeit package) | Same as smuggle default |
+| D-03 | `DELIVER_TIME_LIMIT_S` | **240** | Match smuggle |
+| D-04 | Wanted on LOS | **optional +1** | No scripted Toll Spur chase; natural LOS only |
+
+Week 1 smoke priority remains **Smuggle-01**. Deliver-01 is string/content-ready; implement after smuggle state machine works.
+
 ## 5. Wanted thresholds
 
 | Stars | Constant / rule | Effect |
