@@ -1,3 +1,4 @@
+using Xunit;
 using OpenGta2.GameData.Riff;
 
 namespace OpenGta2.Data.UnitTests;
@@ -9,7 +10,11 @@ public abstract class RiffFileTestBase<T> : IDisposable
 
     protected RiffFileTestBase(string path, Func<RiffReader, T> factory)
     {
-        // Requires OPENGTA2_PATH (see TestGamePath / docs/BUILD-WINDOWS.md).
+        if (!TestGamePath.TryGetRoot(out _, out var error))
+        {
+            throw Xunit.Sdk.SkipException.ForSkip(error ?? "OPENGTA2_PATH is not configured.");
+        }
+
         _stream = TestGamePath.OpenFile(path);
         _riffReader = new RiffReader(_stream);
 
