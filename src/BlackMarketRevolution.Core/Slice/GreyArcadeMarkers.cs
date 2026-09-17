@@ -47,19 +47,19 @@ public static class GreyArcadeMarkers
     public static readonly AtlasPoint SpawnPlayer = new(480f, 2920f);
 
     /// <summary>MARKER_CONTACT — accept Smuggle-01.</summary>
-    public static readonly AtlasPoint Contact = new(760f, 2840f);
+    public static readonly AtlasPoint Contact = new(720f, 2900f); // open Plaza floor (was board center)
 
     /// <summary>MARKER_PICKUP — Wharf Pickup.</summary>
-    public static readonly AtlasPoint Pickup = new(960f, 3640f);
+    public static readonly AtlasPoint Pickup = new(1000f, 3520f); // wharf approach road (was bay center)
 
     /// <summary>MARKER_DROP — Alley Drop.</summary>
-    public static readonly AtlasPoint Drop = new(1480f, 3360f);
+    public static readonly AtlasPoint Drop = new(1340f, 3280f); // Neon Alley roadbed (was drop bay center)
 
     /// <summary>Underground Stack buy marker.</summary>
-    public static readonly AtlasPoint Property = new(880f, 3180f);
+    public static readonly AtlasPoint Property = new(920f, 3280f); // loading door / south pad (was building center)
 
     /// <summary>MARKER_TRADER / SPAWN_TRADER — street earn (+25–40, 30s CD).</summary>
-    public static readonly AtlasPoint Trader = new(280f, 2760f);
+    public static readonly AtlasPoint Trader = new(320f, 2840f); // south of booth toward Plaza (was booth center)
 
     public static float InteractRadiusWorld => InteractRadiusAtlasPx * AtlasToWorldScale;
 
