@@ -109,14 +109,25 @@ y↑ toward rest of city / State
 
 | Step | Marker id | Position | Action |
 |------|-----------|----------|--------|
-| Accept | `MARKER_CONTACT` | `(760, 2840)` | Start; show pickup |
-| Pickup | `MARKER_PICKUP` | `(960, 3640)` | Interact; cargo flag on |
+| Accept | `MARKER_CONTACT` | **`(720, 2900)`** | Start; show pickup (Plaza pad) |
+| Pickup | `MARKER_PICKUP` | **`(1000, 3520)`** | Interact; cargo flag on (approach pad) |
 | Transit | Neon Alley spine | `(1180, 3000)` → `(1500, 3520)` | Primary route (~80 px wide) |
-| Drop | `MARKER_DROP` | `(1480, 3360)` | Interact; +120 crypto |
+| Drop | `MARKER_DROP` | **`(1340, 3280)`** | Interact; +120 crypto (alley pad) |
 | Fail | — | — | Timer 240s / wanted 3 while carrying / arrest-death while carrying — Sol §6 |
 
 **Alt path:** Service Alley `E1` — keep clear but secondary so the Alley stays obvious.  
 **Heat (Week 1 — option A):** Scripted chase from Toll Spur `(640, 2220)` when **cargo flag is on** (wanted +1, one engage). Natural pickup-LOS per Sol §6.2 is **nice if a patrol reaches the bay** — not required for smoke; Toll Spur is too far for reliable natural LOS. Do not add a special Wharf officer for Week 1 unless smoke fails without it (option B deferred).
+
+
+**Interact pads (walkable — eng SOI):** Landmark *visual* centers may sit on props; **markers below are pads on open plaza/alley** so the player can enter the 48px radius on foot. Spike 2026-09-16: prior centers were ~225px short of interact (collision). Nudged:
+
+| Marker | Visual / prop center | **Interact pad (wire this)** |
+|--------|----------------------|------------------------------|
+| CONTACT | board `(760, 2840)` | **`(720, 2900)`** Plaza floor |
+| PROPERTY | Stack `(880, 3180)` | **`(920, 3280)`** loading-door pad |
+| PICKUP | bay `(960, 3640)` | **`(1000, 3520)`** wharf approach |
+| DROP | bay `(1480, 3360)` | **`(1340, 3280)`** Neon Alley roadbed |
+| TRADER | booth `(280, 2760)` | **`(320, 2840)`** south of booth |
 
 **Order flexibility:** Property optional vs smuggle order (Sol acceptance) — both markers always available.
 
@@ -132,8 +143,8 @@ All positions are world px on the parent 4000×4000 map, **inside** the Grey Arc
 | Id | Role | Position | Facing | Notes |
 |----|------|----------|--------|-------|
 | `SPAWN_PLAYER` | Player / arrest return | `(480, 2920)` | East (+x) | West of Ledger Plaza |
-| `SPAWN_TRADER` | Street earn NPC | `(280, 2760)` | South | Interact radius **48** |
-| `SPAWN_CONTACT` | Smuggle-01 accept | `(760, 2840)` | West | On Plaza; Echo owns lines |
+| `SPAWN_TRADER` | Street earn NPC | pad **`(320, 2840)`** (booth visual `(280, 2760)`) | South | Interact radius **48** |
+| `SPAWN_CONTACT` | Smuggle-01 accept | pad **`(720, 2900)`** (board visual `(760, 2840)`) | West | Plaza floor; Echo owns lines |
 | `SPAWN_CIV_A` | Neutral civilian (NAP test) | `(640, 2900)` | Random | Optional; Plaza only |
 | `SPAWN_CIV_B` | Neutral civilian | `(1000, 3120)` | Random | Near Stack approach |
 | `SPAWN_CAR_FRINGE` | Optional parked car | `(1400, 2300)` | West | Fringe Lots |
@@ -149,7 +160,7 @@ All positions are world px on the parent 4000×4000 map, **inside** the Grey Arc
 |-------|------:|
 | Id | `PROP_UNDERGROUND_01` |
 | Landmark | Underground Stack |
-| Interact / buy marker | `(880, 3180)` |
+| Interact / buy marker | **`(920, 3280)`** (loading-door pad; visual center `(880, 3180)`) |
 | Building AABB (solid) | `(800, 3080)` → `(960, 3280)` |
 | Loading door (OWNED flash / drop adjacency OK) | `(920, 3280)` |
 | Buy price / income | Sol / `BALANCE-GREY-ARCADE` — **150** crypto · **+8 / 15s** |
@@ -165,15 +176,15 @@ Primary path is a polyline for nav hints / Spike timing. Corridor width **≥80*
 
 | # | Waypoint id | Position | Purpose |
 |---|-------------|----------|---------|
-| 0 | `WP_ACCEPT` | `(760, 2840)` | Mission start (contact) |
+| 0 | `WP_ACCEPT` | `(720, 2900)` | Mission start (contact pad) |
 | 1 | `WP_PLAZA_EXIT` | `(920, 2960)` | Leave Plaza toward Stack/Wharf |
 | 2 | `WP_STACK_CORNER` | `(1000, 3200)` | Pass Underground Stack |
 | 3 | `WP_WHARF_APPROACH` | `(1000, 3480)` | Approach bay |
-| 4 | `WP_PICKUP` | `(960, 3640)` | Pickup interact (cargo on) |
+| 4 | `WP_PICKUP` | `(1000, 3520)` | Pickup interact (cargo on) |
 | 5 | `WP_ALLEY_ENTER` | `(1180, 3000)` | Enter Neon Alley north mouth |
 | 6 | `WP_ALLEY_MID` | `(1340, 3180)` | Mid corridor |
 | 7 | `WP_ALLEY_BEND` | `(1500, 3320)` | Bend toward drop |
-| 8 | `WP_DROP` | `(1480, 3360)` | Drop interact (payout) |
+| 8 | `WP_DROP` | `(1340, 3280)` | Drop interact (payout) |
 
 **Suggested order after accept:** 0 → 1 → 2 → 3 → 4 (pickup) → 5 → 6 → 7 → 8 (drop).  
 Players may free-roam; waypoints are for markers, breadcrumb optional, and smoke timing — not a railroad.
@@ -209,34 +220,35 @@ CLIP_MAX = (2000, 4000)
 
 # Spawns
 SPAWN_PLAYER     = (480, 2920)
-SPAWN_TRADER     = (280, 2760)
-SPAWN_CONTACT    = (760, 2840)
+SPAWN_TRADER     = (320, 2840)   # interact pad (booth visual 280,2760)
+SPAWN_CONTACT    = (720, 2900)   # Plaza pad (board visual 760,2840)
 SPAWN_CIV_A      = (640, 2900)   # optional NAP target
 SPAWN_CIV_B      = (1000, 3120)
 SPAWN_CAR_FRINGE = (1400, 2300)
 SPAWN_CAR_WHARF  = (1100, 3700)
 
-# Property
-MARKER_PROPERTY      = (880, 3180)
+# Property — wire pad, not building center
+MARKER_PROPERTY      = (920, 3280)   # loading-door pad
+PROP_VISUAL_CENTER   = (880, 3180)
 PROP_AABB_MIN        = (800, 3080)
 PROP_AABB_MAX        = (960, 3280)
-PROP_LOADING_DOOR    = (920, 3280)
+PROP_LOADING_DOOR    = MARKER_PROPERTY
 
-# Smuggle markers + waypoints
+# Smuggle markers + waypoints (pads on open ground)
 MARKER_TRADER = SPAWN_TRADER
 MARKER_CONTACT = SPAWN_CONTACT
-MARKER_PICKUP = (960, 3640)
-MARKER_DROP   = (1480, 3360)
+MARKER_PICKUP = (1000, 3520)   # wharf approach
+MARKER_DROP   = (1340, 3280)   # alley roadbed
 WP = [
-  (760, 2840),   # 0 accept
+  (720, 2900),   # 0 accept pad
   (920, 2960),   # 1 plaza exit
   (1000, 3200),  # 2 stack corner
   (1000, 3480),  # 3 wharf approach
-  (960, 3640),   # 4 pickup
+  (1000, 3520),  # 4 pickup pad
   (1180, 3000),  # 5 alley enter
   (1340, 3180),  # 6 alley mid
   (1500, 3320),  # 7 alley bend
-  (1480, 3360),  # 8 drop
+  (1340, 3280),  # 8 drop pad
 ]
 
 # Police
