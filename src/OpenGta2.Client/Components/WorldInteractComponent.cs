@@ -88,7 +88,7 @@ public sealed class WorldInteractComponent : BaseDrawableComponent
             return;
         }
 
-        // Horizontal (XY) only — Ped.Position.Z must not affect interact reachability.
+        // Horizontal (XY) only - Ped.Position.Z must not affect interact reachability.
         var playerAtlasX = GreyArcadeMarkers.WorldToAtlas(ped.Position.X);
         var playerAtlasY = GreyArcadeMarkers.WorldToAtlas(ped.Position.Y);
 
@@ -155,10 +155,10 @@ public sealed class WorldInteractComponent : BaseDrawableComponent
         ped.Position = new Vector3(wx, wy, ped.Position.Z);
         DiagnosticValues.Set(
             "world.teleport",
-            $"Home → {marker.ShortLabel} atlas=({marker.Atlas.X},{marker.Atlas.Y}) " +
+            $"Home -> {marker.ShortLabel} atlas=({marker.Atlas.X},{marker.Atlas.Y}) " +
             $"world=({wx:0.00},{wy:0.00})");
         Console.WriteLine(
-            $"[World] TELEPORT Home → {marker.ShortLabel} " +
+            $"[World] TELEPORT Home -> {marker.ShortLabel} " +
             $"atlas=({marker.Atlas.X},{marker.Atlas.Y}) world=({wx:0.00},{wy:0.00})");
     }
 
@@ -169,26 +169,26 @@ public sealed class WorldInteractComponent : BaseDrawableComponent
             case GreyArcadeMarkerId.Contact:
                 if (_mission.TryStart())
                 {
-                    DiagnosticValues.Set("world.interact", "CONTACT → Smuggle-01 started");
-                    Console.WriteLine("[World] CONTACT — Smuggle-01 accepted (go to PICKUP)");
+                    DiagnosticValues.Set("world.interact", "CONTACT -> Smuggle-01 started");
+                    Console.WriteLine("[World] CONTACT - Smuggle-01 accepted (go to PICKUP)");
                 }
                 else
                 {
                     DiagnosticValues.Set("world.interact", $"CONTACT refused ({_mission.Phase})");
-                    Console.WriteLine($"[World] CONTACT refused — phase={_mission.Phase}");
+                    Console.WriteLine($"[World] CONTACT refused - phase={_mission.Phase}");
                 }
                 break;
 
             case GreyArcadeMarkerId.Pickup:
                 if (_mission.TryPickup())
                 {
-                    DiagnosticValues.Set("world.interact", "PICKUP → carrying");
-                    Console.WriteLine("[World] PICKUP — package acquired (go to DROP)");
+                    DiagnosticValues.Set("world.interact", "PICKUP -> carrying");
+                    Console.WriteLine("[World] PICKUP - package acquired (go to DROP)");
                 }
                 else
                 {
                     DiagnosticValues.Set("world.interact", $"PICKUP refused ({_mission.Phase})");
-                    Console.WriteLine($"[World] PICKUP refused — phase={_mission.Phase}");
+                    Console.WriteLine($"[World] PICKUP refused - phase={_mission.Phase}");
                 }
                 break;
 
@@ -197,30 +197,30 @@ public sealed class WorldInteractComponent : BaseDrawableComponent
                 {
                     DiagnosticValues.Set(
                         "world.interact",
-                        $"DROP → +{SmuggleMission.RewardCrypto} crypto" +
+                        $"DROP -> +{SmuggleMission.RewardCrypto} crypto" +
                         (napBonus != 0 ? $"; NAP +{napBonus}" : ""));
                     Console.WriteLine(
-                        $"[World] DROP — delivered +{SmuggleMission.RewardCrypto} → {_wallet.Crypto}" +
+                        $"[World] DROP - delivered +{SmuggleMission.RewardCrypto} -> {_wallet.Crypto}" +
                         (napBonus != 0 ? $"; NAP +{napBonus}" : ""));
                 }
                 else
                 {
                     DiagnosticValues.Set("world.interact", $"DROP refused ({_mission.Phase})");
-                    Console.WriteLine($"[World] DROP refused — phase={_mission.Phase}");
+                    Console.WriteLine($"[World] DROP refused - phase={_mission.Phase}");
                 }
                 break;
 
             case GreyArcadeMarkerId.Property:
                 if (_property.TryPurchase(_wallet))
                 {
-                    DiagnosticValues.Set("world.interact", "PROPERTY → OWNED");
+                    DiagnosticValues.Set("world.interact", "PROPERTY -> OWNED");
                     Console.WriteLine(
-                        $"[World] PROPERTY — bought for {UndergroundProperty.BuyPrice}. Crypto={_wallet.Crypto}");
+                        $"[World] PROPERTY - bought for {UndergroundProperty.BuyPrice}. Crypto={_wallet.Crypto}");
                 }
                 else if (_property.Owned)
                 {
                     DiagnosticValues.Set("world.interact", "PROPERTY already owned");
-                    Console.WriteLine("[World] PROPERTY — already owned");
+                    Console.WriteLine("[World] PROPERTY - already owned");
                 }
                 else
                 {
@@ -228,7 +228,7 @@ public sealed class WorldInteractComponent : BaseDrawableComponent
                         "world.interact",
                         $"PROPERTY need {UndergroundProperty.BuyPrice} (have {_wallet.Crypto})");
                     Console.WriteLine(
-                        $"[World] PROPERTY buy refused — need {UndergroundProperty.BuyPrice}, have {_wallet.Crypto}");
+                        $"[World] PROPERTY buy refused - need {UndergroundProperty.BuyPrice}, have {_wallet.Crypto}");
                 }
                 break;
 
@@ -237,9 +237,9 @@ public sealed class WorldInteractComponent : BaseDrawableComponent
                 {
                     DiagnosticValues.Set(
                         "world.interact",
-                        $"TRADER → +{reward} crypto (bal {_wallet.Crypto}; cd {StreetTrade.CooldownSeconds:0}s)");
+                        $"TRADER -> +{reward} crypto (bal {_wallet.Crypto}; cd {StreetTrade.CooldownSeconds:0}s)");
                     Console.WriteLine(
-                        $"[World] TRADER — street trade +{reward} → {_wallet.Crypto} " +
+                        $"[World] TRADER - street trade +{reward} -> {_wallet.Crypto} " +
                         $"(cooldown {StreetTrade.CooldownSeconds:0}s)");
                 }
                 else
@@ -248,7 +248,7 @@ public sealed class WorldInteractComponent : BaseDrawableComponent
                         "world.interact",
                         $"TRADER cooldown {_streetTrade.CooldownRemainingSeconds:0.0}s");
                     Console.WriteLine(
-                        $"[World] TRADER refused — cooldown {_streetTrade.CooldownRemainingSeconds:0.0}s");
+                        $"[World] TRADER refused - cooldown {_streetTrade.CooldownRemainingSeconds:0.0}s");
                 }
                 break;
         }
@@ -267,14 +267,14 @@ public sealed class WorldInteractComponent : BaseDrawableComponent
 
         _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
 
-        // Debug marker squares + labels (world → screen via Camera matrices).
+        // Debug marker squares + labels (world -> screen via Camera matrices).
         foreach (var marker in GreyArcadeMarkers.All)
         {
             var (wx, wy) = GreyArcadeMarkers.ToWorld(marker.Atlas);
             var world = new Vector3(wx, wy, groundZ);
             var screen = vp.Project(world, _camera.Projection, _camera.ViewMatrix, Matrix.Identity);
 
-            // Behind camera or failed project → skip square (diagnostics still show distance).
+            // Behind camera or failed project -> skip square (diagnostics still show distance).
             if (screen.Z < 0f || screen.Z > 1f)
                 continue;
 
@@ -343,4 +343,4 @@ public sealed class WorldInteractComponent : BaseDrawableComponent
         };
         return inRange ? Color.White : baseColor;
     }
-}
+}
