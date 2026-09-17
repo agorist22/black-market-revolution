@@ -2,7 +2,7 @@
 
 > **DRAFT · NOT PUBLIC**  
 > Black Market Revolution · Beacon · 2026-09-16  
-> Offline prep only. Do **not** publish, paste to Steam, or post socially until Reed unfreezes marketing after smoke.
+> Offline prep only. Do **not** publish, paste to Steam, or post socially until Reed opens a **public** marketing unfreeze.
 
 ---
 
@@ -32,13 +32,18 @@ First public look, when Reed clears it: one grey-market loop that has to feel go
 
 ## Claim freeze (before any public paste)
 
-- [ ] Reed unfroze marketing after smoke  
-- [ ] No named NPCs as live
+- [ ] Reed opened a **public** marketing unfreeze (Support craft sync ≠ public)  
+- [ ] No named NPCs as live  
 - [ ] Roger Ver not cast as NPC / not menu chrome; Sal Mayweather + SEK3/Konkin OK  
-- [ ] No dual-currency / wanted / elections as shipped  
+- [ ] No dual-currency / wanted / elections / cars / full district as shipped  
+- [ ] Smoke PASS stubs (VS-04…09) not pasted as Steam feature checklist  
 - [ ] No invented dates, platforms, wishlists, scores, or quotes  
 - [ ] Echo skim if copy drifts into manifesto  
 - [ ] Spike/Reed skim before “playable now” language  
+
+### Smoke sync (internal) — see `POSITIONING-DRAFT.md`
+
+Crashers 1–5 + VS-04…09 **PASS** on Prometheus; smoke #6/#7/#13 still **BLOCKED**. Still DRAFT/NOT PUBLIC.
 
 ## Source
 

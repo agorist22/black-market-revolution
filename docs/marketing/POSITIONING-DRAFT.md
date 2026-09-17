@@ -4,7 +4,7 @@
 Owner: Beacon · 2026-09-16  
 Sources: `PROJECT.md`, `DECISIONS.md`, `ROADMAP.md`, Grey Arcade slice docs  
 Voice: Echo pass (dry, street-smart, wry) — not yet user-locked  
-Scope: **grey-market slice fantasy only**. Zero public posts until Reed unfreezes.
+Scope: **grey-market slice**. Thin craft unfreeze 2026-09-16: claim-freeze sync only. Still **DRAFT · NOT PUBLIC**. Zero public posts.
 
 ---
 
@@ -46,16 +46,32 @@ Neon Market: earn your stake between polite State forms and a grey market that a
 - First design focus: grey-market / Agorist loop (The Grey Arcade in design docs)
 - Fantasy sold: hustle, property, missions, heat, reputation choices
 - Status: early development — sell **fantasy + tone**, not a feature checklist
+- **Internal only:** shell crashers 1–5 and grey-market stubs VS-04…09 smoke-PASS on Prometheus (see sync table). That is **not** a public “shipped” claim.
+
+## Smoke sync (claim freeze) — 2026-09-16
+
+Source of truth: `docs/qa/SMOKE-GREY-ARCADE.md`. Marketing may **reference stub existence in internal docs**; still **must not** paste as store/social “in the game now.”
+
+| Smoke / VS | Status | Public / store claim? |
+|------------|--------|------------------------|
+| Crashers 1–5 (build/launch/quit) | **PASS** | No — shell only, not a product pitch |
+| #8 currency earn | **PARTIAL** (F3 grant; not trader) | No — do not claim dual-currency loop |
+| #9 property (VS-05) | **PARTIAL** / VS **PASS** | No — stub buy/income only |
+| #10 Smuggle-01 (VS-06) | **PARTIAL** / VS **PASS** | No — proximity stub, not full mission fantasy |
+| #11 wanted (VS-07) | **PARTIAL** / VS **PASS** | No — debug-keyed chase stub |
+| #12 NAP (VS-08) | **PASS** | No — systems stub; not manifesto copy |
+| VS-09 slice complete / reset | **PASS** | No — internal QA tooling |
+| #6 walkable clip / #7 cars / #13 stability | **BLOCKED** | No — do not imply open district or cars |
 
 ## What we must not claim as live
 
-Until Vega / Reed / Spike mark a milestone shippable:
+Until Reed opens a **public** marketing unfreeze (separate from Support craft):
 
-- Vertical-slice systems as “in the game now”
+- Any smoke-PASS stub as a finished Steam feature list
+- “Play the full Grey Arcade loop today” / wishlist as if shipped
 - Named NPCs as live cast (e.g. Brandon Aragon)
-- Roger Ver is **not** an NPC and not menu/store chrome (owner: free). Sal Mayweather stays in design pool (crypto-focused). SEK3/Konkin quotes OK
-- Dual-currency, wanted/faction, specific missions as shipped
-- Elections / city-dominance win states
+- Roger Ver as NPC or menu/store chrome (owner: free). Sal Mayweather stays in design pool (crypto-focused). SEK3/Konkin quotes OK
+- Full dual-currency economy, elections, city-dominance win states
 - Platforms, dates, wishlists, scores, or press quotes we did not earn
 
 ## Short store blurb (~50 words)
@@ -98,9 +114,9 @@ Not a crime tutorial. Not a recruitment pitch. A satirical sandbox about clever 
 ## Still open
 
 - Echo: optional punch-up; State vs Counter-Economy caption samples  
-- Reed: first public-safe reveal / wishlist milestone; when craft tickets may open  
+- Reed: first **public** marketing unfreeze / wishlist milestone (craft claim-sync ≠ public)  
 - See also: `WISHLIST-BLURB-DRAFT.md` (NOT PUBLIC), `STEAM-STORE-PACK.md` if present locally  
 
 ---
 
-**NOT PUBLIC.** Do not paste to Steam, socials, Discord, or press until Reed unfreezes marketing after smoke.
+**NOT PUBLIC.** Do not paste to Steam, socials, Discord, or press until Reed opens a **public** marketing unfreeze. Support craft claim-sync does not authorize posts.

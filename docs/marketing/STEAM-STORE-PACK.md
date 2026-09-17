@@ -1,9 +1,9 @@
 # Black Market Revolution — Steam Store Pack (Draft)
 
-> **DRAFT · NOT PUBLIC** — offline prep. Zero public posts until Reed unfreezes marketing after smoke.
+> **DRAFT · NOT PUBLIC** — offline prep. Zero public posts until Reed opens a **public** marketing unfreeze.
 
 Status: **draft** · 2026-09-16 · Beacon  
-Voice: Echo-aligned (dry, street-smart, wry) · Claims freeze: fantasy + tone only until Vega/Reed/Spike sign off  
+Voice: Echo-aligned (dry, street-smart, wry) · Claims freeze: fantasy + tone; smoke PASS ≠ store checklist  
 Parent: `POSITIONING-DRAFT.md`
 
 ---
@@ -113,8 +113,10 @@ Neon Market’s on the board. Title’s locked. We’re building a satirical top
 
 ## Claim freeze checklist (before any public paste)
 
+- [ ] Reed opened a **public** marketing unfreeze  
 - [ ] No named NPCs as “in the game”  
-- [ ] No dual-currency / wanted / elections listed as shipped  
+- [ ] No dual-currency / wanted / elections / cars / full district listed as shipped  
+- [ ] VS-04…09 smoke PASS not copied into Steam features as finished  
 - [ ] No dates, platforms, or player counts invented  
 - [ ] No press quotes or metrics we didn’t earn  
 - [ ] Echo skim if copy drifts into manifesto  
@@ -124,5 +126,6 @@ Neon Market’s on the board. Title’s locked. We’re building a satirical top
 
 ## Sync notes
 
-- Capsule / short / About mirror `POSITIONING-DRAFT.md` v2 (Echo pass).  
-- World names optional from `docs/world/NEON-MARKET-SLICE.md` — captions only until vertical slice is public-safe.  
+- Capsule / short / About mirror `POSITIONING-DRAFT.md` (Echo pass + 2026-09-16 smoke claim table).  
+- World names optional from `docs/world/NEON-MARKET-SLICE.md` — captions only; #6 clip still BLOCKED.  
+- Smoke truth: `docs/qa/SMOKE-GREY-ARCADE.md` — #12 NAP PASS; #6/#7/#13 BLOCKED.  
