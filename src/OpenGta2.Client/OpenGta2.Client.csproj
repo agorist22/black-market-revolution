@@ -43,4 +43,9 @@
     <Message Text="Restoring dotnet tools" Importance="High" />
     <Exec Command="dotnet tool restore" />
   </Target>
+
+  <ItemGroup>
+    <!-- Pulse loose cue WAVs / README (Week 1 stubs OK if missing) -->
+    <None Include="Assets\Audio\**\*" Exclude="Assets\Audio\bin\**;Assets\Audio\obj\**" CopyToOutputDirectory="PreserveNewest" Link="Assets\Audio\%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
 </Project>

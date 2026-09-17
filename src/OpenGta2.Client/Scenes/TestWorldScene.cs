@@ -3,6 +3,7 @@ using BlackMarketRevolution.Economy;
 using BlackMarketRevolution.Missions;
 using BlackMarketRevolution.Nap;
 using BlackMarketRevolution.Wanted;
+using OpenGta2.Client.Audio;
 using OpenGta2.Client.Components;
 using OpenGta2.Client.Diagnostics;
 using OpenGta2.Client.Peds;
@@ -38,6 +39,10 @@ public class TestWorldScene : Scene
         Game.Services.ReplaceService(mission);
         Game.Services.ReplaceService(new SliceDebugController(wallet, property, mission, wanted, nap, streetTrade));
 
+        var cues = new AudioCueService();
+        Game.Services.ReplaceService(cues);
+
+        AddComponent<AudioCueHookComponent>();
         AddComponent<AudioTestComponent>();
         AddComponent<MapComponent>();
         AddComponent<SpriteTestComponent>();
