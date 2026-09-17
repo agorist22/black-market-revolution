@@ -13,7 +13,7 @@ namespace OpenGta2.Client.Components;
 
 /// <summary>
 /// Grey Arcade proximity markers (Atlas FROZEN coords). When the player is within
-/// interact radius, shows a prompt and accepts E/F to trigger mission/property actions.
+/// interact radius, shows a prompt and accepts E/F to trigger mission/property/trader actions.
 /// Existing smoke hotkeys (M/I/O/P, F-keys) remain as debug fallback.
 /// </summary>
 public sealed class WorldInteractComponent : BaseDrawableComponent
@@ -26,6 +26,7 @@ public sealed class WorldInteractComponent : BaseDrawableComponent
     private readonly PlayerWallet _wallet;
     private readonly UndergroundProperty _property;
     private readonly SmuggleMission _mission;
+    private readonly StreetTrade _streetTrade;
 
     private SpriteBatch? _spriteBatch;
     private SpriteFont? _font;
@@ -40,13 +41,15 @@ public sealed class WorldInteractComponent : BaseDrawableComponent
         Camera camera,
         PlayerWallet wallet,
         UndergroundProperty property,
-        SmuggleMission mission) : base(game)
+        SmuggleMission mission,
+        StreetTrade streetTrade) : base(game)
     {
         _controls = controls;
         _camera = camera;
         _wallet = wallet;
         _property = property;
         _mission = mission;
+        _streetTrade = streetTrade;
     }
 
     public override void Initialize()
@@ -74,6 +77,9 @@ public sealed class WorldInteractComponent : BaseDrawableComponent
 
     public override void Update(GameTime gameTime)
     {
+        var dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+        _streetTrade.Tick(dt);
+
         var ped = _camera.AttachedToPed;
         if (ped == null)
         {
@@ -116,6 +122,12 @@ public sealed class WorldInteractComponent : BaseDrawableComponent
                 $"{nearest.Value.ShortLabel} dist={nearestDist:0.0}px " +
                 (nearestDist <= GreyArcadeMarkers.InteractRadiusAtlasPx ? "IN" : "out"));
         }
+
+        DiagnosticValues.Set(
+            "world.trader",
+            _streetTrade.IsReady
+                ? $"ready trades={_streetTrade.TradeCount}"
+                : $"cd {_streetTrade.CooldownRemainingSeconds:0.0}s trades={_streetTrade.TradeCount}");
 
         var interact =
             _controls.IsKeyDown(Keys.E) ||
@@ -194,6 +206,26 @@ public sealed class WorldInteractComponent : BaseDrawableComponent
                         $"[World] PROPERTY buy refused — need {UndergroundProperty.BuyPrice}, have {_wallet.Crypto}");
                 }
                 break;
+
+            case GreyArcadeMarkerId.Trader:
+                if (_streetTrade.TryTrade(_wallet, out var reward))
+                {
+                    DiagnosticValues.Set(
+                        "world.interact",
+                        $"TRADER → +{reward} crypto (bal {_wallet.Crypto}; cd {StreetTrade.CooldownSeconds:0}s)");
+                    Console.WriteLine(
+                        $"[World] TRADER — street trade +{reward} → {_wallet.Crypto} " +
+                        $"(cooldown {StreetTrade.CooldownSeconds:0}s)");
+                }
+                else
+                {
+                    DiagnosticValues.Set(
+                        "world.interact",
+                        $"TRADER cooldown {_streetTrade.CooldownRemainingSeconds:0.0}s");
+                    Console.WriteLine(
+                        $"[World] TRADER refused — cooldown {_streetTrade.CooldownRemainingSeconds:0.0}s");
+                }
+                break;
         }
     }
 
@@ -236,7 +268,7 @@ public sealed class WorldInteractComponent : BaseDrawableComponent
         if (_nearestInRange != null)
         {
             var m = _nearestInRange.Value;
-            var prompt = $"[E/F] {m.Prompt}";
+            var prompt = FormatPrompt(m);
             var textSize = _font.MeasureString(prompt);
             var y = (LogicalHeight - 120f) * sy;
             var panelPadX = 12f * sx;
@@ -265,6 +297,14 @@ public sealed class WorldInteractComponent : BaseDrawableComponent
         GraphicsDevice.DepthStencilState = DepthStencilState.Default;
     }
 
+    private string FormatPrompt(GreyArcadeMarkerDef marker)
+    {
+        if (marker.Id == GreyArcadeMarkerId.Trader && !_streetTrade.IsReady)
+            return $"[E/F] Trader cooldown {_streetTrade.CooldownRemainingSeconds:0}s";
+
+        return $"[E/F] {marker.Prompt}";
+    }
+
     private static Color MarkerColor(GreyArcadeMarkerId id, bool inRange)
     {
         var baseColor = id switch
@@ -273,6 +313,7 @@ public sealed class WorldInteractComponent : BaseDrawableComponent
             GreyArcadeMarkerId.Pickup => new Color(0xE6, 0xC8, 0x2E),
             GreyArcadeMarkerId.Drop => new Color(0x2E, 0xA0, 0xE6),
             GreyArcadeMarkerId.Property => new Color(0xE6, 0x6A, 0x2E),
+            GreyArcadeMarkerId.Trader => new Color(0x6A, 0xE6, 0x2E),
             _ => Color.White
         };
         return inRange ? Color.White : baseColor;

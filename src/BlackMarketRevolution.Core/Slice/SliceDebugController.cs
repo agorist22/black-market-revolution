@@ -16,19 +16,22 @@ public sealed class SliceDebugController
     private readonly SmuggleMission _mission;
     private readonly WantedMeter _wanted;
     private readonly NapReputation _nap;
+    private readonly StreetTrade _streetTrade;
 
     public SliceDebugController(
         PlayerWallet wallet,
         UndergroundProperty property,
         SmuggleMission mission,
         WantedMeter wanted,
-        NapReputation nap)
+        NapReputation nap,
+        StreetTrade streetTrade)
     {
         _wallet = wallet;
         _property = property;
         _mission = mission;
         _wanted = wanted;
         _nap = nap;
+        _streetTrade = streetTrade;
     }
 
     /// <summary>
@@ -43,7 +46,7 @@ public sealed class SliceDebugController
 
     /// <summary>
     /// Reset wanted, NAP, crypto to start; clear mission + slice “ever” counters;
-    /// keep property ownership (and its income/raid timers).
+    /// clear street-trade cooldown; keep property ownership (and its income/raid timers).
     /// </summary>
     public void ResetKeepProperty()
     {
@@ -51,6 +54,7 @@ public sealed class SliceDebugController
         _wanted.ResetForDebug();
         _nap.ResetForDebug();
         _mission.ResetForDebug();
+        _streetTrade.ResetForDebug();
     }
 
     /// <summary>
