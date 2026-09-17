@@ -10,14 +10,15 @@ public enum GreyArcadeMarkerId
     Contact,
     Pickup,
     Drop,
-    Property
+    Property,
+    Trader
 }
 
 /// <summary>Atlas design-space point (pixels on parent 4000×4000 map).</summary>
 public readonly record struct AtlasPoint(float X, float Y);
 
 /// <summary>
-/// Static Grey Arcade clip + interact markers. Street trader omitted (optional).
+/// Static Grey Arcade clip + interact markers (smuggle, property buy, street trader).
 /// </summary>
 public static class GreyArcadeMarkers
 {
@@ -57,6 +58,9 @@ public static class GreyArcadeMarkers
     /// <summary>Underground Stack buy marker.</summary>
     public static readonly AtlasPoint Property = new(880f, 3180f);
 
+    /// <summary>MARKER_TRADER / SPAWN_TRADER — street earn (+25–40, 30s CD).</summary>
+    public static readonly AtlasPoint Trader = new(280f, 2760f);
+
     public static float InteractRadiusWorld => InteractRadiusAtlasPx * AtlasToWorldScale;
 
     public static float AtlasToWorld(float atlasPx) => atlasPx * AtlasToWorldScale;
@@ -71,7 +75,8 @@ public static class GreyArcadeMarkers
         new(GreyArcadeMarkerId.Contact, Contact, "CONTACT", "Accept Smuggle-01"),
         new(GreyArcadeMarkerId.Pickup, Pickup, "PICKUP", "Pick up package"),
         new(GreyArcadeMarkerId.Drop, Drop, "DROP", "Deliver package"),
-        new(GreyArcadeMarkerId.Property, Property, "PROPERTY", "Buy Underground Stack")
+        new(GreyArcadeMarkerId.Property, Property, "PROPERTY", "Buy Underground Stack"),
+        new(GreyArcadeMarkerId.Trader, Trader, "TRADER", "Street trade (+25–40)")
     ];
 }
 

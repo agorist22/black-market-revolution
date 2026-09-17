@@ -28,13 +28,15 @@ public class TestWorldScene : Scene
         Game.Services.ReplaceService(wallet);
         var property = new UndergroundProperty();
         Game.Services.ReplaceService(property);
+        var streetTrade = new StreetTrade();
+        Game.Services.ReplaceService(streetTrade);
         var wanted = new WantedMeter();
         Game.Services.ReplaceService(wanted);
         var nap = new NapReputation();
         Game.Services.ReplaceService(nap);
         var mission = new SmuggleMission(wanted, nap);
         Game.Services.ReplaceService(mission);
-        Game.Services.ReplaceService(new SliceDebugController(wallet, property, mission, wanted, nap));
+        Game.Services.ReplaceService(new SliceDebugController(wallet, property, mission, wanted, nap, streetTrade));
 
         AddComponent<AudioTestComponent>();
         AddComponent<MapComponent>();
