@@ -11,7 +11,7 @@ namespace OpenGta2.Client.Components;
 
 /// <summary>
 /// VS-06: Smuggle-01 accept/pickup/deliver + bottom-center <c>hud_mission</c>
-/// per docs/ui/HUD-WIREFRAME-SLICE.md. Week 1 smoke uses debug hotkeys (no map markers).
+/// per docs/ui/HUD-WIREFRAME-SLICE.md. Proximity markers via WorldInteractComponent; M/I/O remain debug fallback hotkeys.
 /// </summary>
 public sealed class MissionHudComponent : BaseDrawableComponent
 {
