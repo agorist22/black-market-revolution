@@ -11,7 +11,7 @@ namespace OpenGta2.Client.Components;
 
 /// <summary>
 /// VS-05: underground property buy + income tick, plus BL <c>hud_property</c>
-/// per docs/ui/HUD-WIREFRAME-SLICE.md. Proximity buy via WorldInteractComponent; P/F3/F4 remain debug fallback hotkeys.
+/// per docs/ui/HUD-WIREFRAME-SLICE.md (§10.1 contrast polish). Proximity buy via WorldInteractComponent; P/F3/F4 remain debug fallback hotkeys.
 /// Raid procs raise shared <see cref="WantedMeter"/> (VS-07).
 /// </summary>
 public sealed class PropertyHudComponent : BaseDrawableComponent
@@ -164,6 +164,8 @@ public sealed class PropertyHudComponent : BaseDrawableComponent
             (int)(220 * sx),
             (int)(28 * sy));
 
+        // Frame §10.1 — unowned: light-grey ≥85% opacity; owned: high-contrast bold.
+        // DebugFont is Latin-1; use ASCII "-" (em dash out of range).
         var ownedLabel = _property.Owned ? "OWNED" : "-";
         var text = $"Property: {ownedLabel}";
         if (_property.Owned && _incomeFlashSeconds > 0f)
@@ -171,17 +173,29 @@ public sealed class PropertyHudComponent : BaseDrawableComponent
         else if (_property.Owned && _raidFlashSeconds > 0f)
             text = "Property: RAID!";
 
+        var ownedSteady = _property.Owned && _raidFlashSeconds <= 0f && _incomeFlashSeconds <= 0f;
         var color = _property.Owned
             ? (_raidFlashSeconds > 0f
                 ? new Color(0xE6, 0x6A, 0x2E)
                 : (_incomeFlashSeconds > 0f
                     ? new Color(0x2E, 0xE6, 0xD6)
                     : Color.White))
-            : Color.Gray;
+            : new Color(211, 211, 211, 217); // LightGray @ ~85% alpha
+
+        var textPos = Scale(Inset, lineY, sx, sy);
 
         _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
         _spriteBatch.Draw(_pixel, panelRect, new Color(0, 0, 0, 160));
-        _spriteBatch.DrawString(_font, text, Scale(Inset, lineY, sx, sy), color);
+        if (ownedSteady)
+        {
+            // Faux-bold: 1px shadow pass so OWNED reads at a glance from BL.
+            _spriteBatch.DrawString(_font, text, textPos + new Vector2(1f * sx, 0f), Color.White);
+            _spriteBatch.DrawString(_font, text, textPos, Color.White);
+        }
+        else
+        {
+            _spriteBatch.DrawString(_font, text, textPos, color);
+        }
         _spriteBatch.End();
 
         GraphicsDevice.DepthStencilState = DepthStencilState.Default;

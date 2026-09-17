@@ -100,9 +100,14 @@ public class DebuggingDrawingComponent : DrawableGameComponent
         var text = _stringBuilder.ToString();
         _stringBuilder.Clear();
 
+        // Frame §10.2 — keep FPS/diag clear of TL glance rect (12,12)–(232,100).
+        // Default anchor: below TL cluster (logical y ≥ 112), scaled to viewport.
+        var vp = GraphicsDevice.Viewport;
+        var sy = vp.Height / 720f;
+        var diagPos = new Vector2(10f, 112f * sy);
 
         _spriteBatch.Begin();
-        _spriteBatch.DrawString(_font, text, new Vector2(10, 10), Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+        _spriteBatch.DrawString(_font, text, diagPos, Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
         _spriteBatch.End();
 
         PerformanceCounters.Drawing.Reset();
