@@ -88,21 +88,21 @@ public sealed class WorldInteractComponent : BaseDrawableComponent
             return;
         }
 
+        // Horizontal (XY) only — Ped.Position.Z must not affect interact reachability.
         var playerAtlasX = GreyArcadeMarkers.WorldToAtlas(ped.Position.X);
         var playerAtlasY = GreyArcadeMarkers.WorldToAtlas(ped.Position.Y);
 
         DiagnosticValues.Set(
             "world.player",
-            $"world=({ped.Position.X:0.00},{ped.Position.Y:0.00}) atlas=({playerAtlasX:0},{playerAtlasY:0})");
+            $"world=({ped.Position.X:0.00},{ped.Position.Y:0.00},z={ped.Position.Z:0.00}) " +
+            $"atlas=({playerAtlasX:0},{playerAtlasY:0})");
 
         GreyArcadeMarkerDef? nearest = null;
         var nearestDist = float.MaxValue;
 
         foreach (var marker in GreyArcadeMarkers.All)
         {
-            var dx = playerAtlasX - marker.Atlas.X;
-            var dy = playerAtlasY - marker.Atlas.Y;
-            var dist = MathF.Sqrt(dx * dx + dy * dy);
+            var dist = HorizontalDistanceAtlas(playerAtlasX, playerAtlasY, marker.Atlas);
             if (dist < nearestDist)
             {
                 nearestDist = dist;
@@ -129,12 +129,37 @@ public sealed class WorldInteractComponent : BaseDrawableComponent
                 ? $"ready trades={_streetTrade.TradeCount}"
                 : $"cd {_streetTrade.CooldownRemainingSeconds:0.0}s trades={_streetTrade.TradeCount}");
 
+        // Smoke backup: Home teleports onto nearest marker pad (XY), keeps ground Z.
+        if (_controls.IsKeyDown(Keys.Home) && nearest != null)
+            TeleportToMarker(ped, nearest.Value);
+
         var interact =
             _controls.IsKeyDown(Keys.E) ||
             _controls.IsKeyDown(Keys.F);
 
         if (interact && _nearestInRange != null)
             TryInteract(_nearestInRange.Value);
+    }
+
+    /// <summary>Atlas-space horizontal distance (X/Y only; ignores world Z).</summary>
+    private static float HorizontalDistanceAtlas(float playerAtlasX, float playerAtlasY, AtlasPoint marker)
+    {
+        var dx = playerAtlasX - marker.X;
+        var dy = playerAtlasY - marker.Y;
+        return MathF.Sqrt(dx * dx + dy * dy);
+    }
+
+    private static void TeleportToMarker(Ped ped, GreyArcadeMarkerDef marker)
+    {
+        var (wx, wy) = GreyArcadeMarkers.ToWorld(marker.Atlas);
+        ped.Position = new Vector3(wx, wy, ped.Position.Z);
+        DiagnosticValues.Set(
+            "world.teleport",
+            $"Home → {marker.ShortLabel} atlas=({marker.Atlas.X},{marker.Atlas.Y}) " +
+            $"world=({wx:0.00},{wy:0.00})");
+        Console.WriteLine(
+            $"[World] TELEPORT Home → {marker.ShortLabel} " +
+            $"atlas=({marker.Atlas.X},{marker.Atlas.Y}) world=({wx:0.00},{wy:0.00})");
     }
 
     private void TryInteract(GreyArcadeMarkerDef marker)
