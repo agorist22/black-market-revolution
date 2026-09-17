@@ -42,6 +42,7 @@ public class TestWorldScene : Scene
         AddComponent<PlayerControllerComponent>();
         AddComponent<PedManagerComponent>();
         AddComponent<CameraComponent>();
+        AddComponent<WorldInteractComponent>();
         AddComponent<WalletHudComponent>();
         AddComponent<PropertyHudComponent>();
         AddComponent<MissionHudComponent>();

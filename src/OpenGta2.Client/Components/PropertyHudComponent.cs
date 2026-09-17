@@ -11,7 +11,7 @@ namespace OpenGta2.Client.Components;
 
 /// <summary>
 /// VS-05: underground property buy + income tick, plus BL <c>hud_property</c>
-/// per docs/ui/HUD-WIREFRAME-SLICE.md. Week 1 smoke uses debug hotkeys (no map marker).
+/// per docs/ui/HUD-WIREFRAME-SLICE.md. Proximity buy via WorldInteractComponent; P/F3/F4 remain debug fallback hotkeys.
 /// Raid procs raise shared <see cref="WantedMeter"/> (VS-07).
 /// </summary>
 public sealed class PropertyHudComponent : BaseDrawableComponent
