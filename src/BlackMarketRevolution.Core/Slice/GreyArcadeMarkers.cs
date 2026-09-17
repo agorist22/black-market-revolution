@@ -22,8 +22,8 @@ public readonly record struct AtlasPoint(float X, float Y);
 /// </summary>
 public static class GreyArcadeMarkers
 {
-    /// <summary>Default interact radius in Atlas px (NEON-MARKET-SLICE).</summary>
-    public const float InteractRadiusAtlasPx = 48f;
+    /// <summary>Default interact radius in Atlas px (raised to 120 for on-foot smoke; pads frozen from #46).</summary>
+    public const float InteractRadiusAtlasPx = 120f;
 
     /// <summary>Atlas parent map size (px).</summary>
     public const float AtlasMapSizePx = 4000f;
@@ -37,7 +37,7 @@ public static class GreyArcadeMarkers
 
     /// <summary>
     /// Atlas px → OpenGta2 world blocks: <c>world = atlas * (256/4000)</c> = 0.064.
-    /// Radius 48 Atlas px ≈ 3.072 world units.
+    /// Radius 120 Atlas px ≈ 7.68 world units.
     /// </summary>
     public const float AtlasToWorldScale = WorldMapBlocks / AtlasMapSizePx;
 
