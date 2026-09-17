@@ -34,6 +34,11 @@ public sealed class NapReputation
     /// <summary>Pending toast count (HUD drains via <see cref="TryDequeueToast"/>).</summary>
     public int PendingToastCount => _toastQueue.Count;
 
+    /// <summary>
+    /// Fired when a “You broke the NAP” toast is queued (Pulse: <c>ui_nap_break</c>).
+    /// </summary>
+    public event Action? NapBroken;
+
     /// <summary>Reset clean-run tracking at smuggle accept / mission start.</summary>
     public void BeginMissionRun() => CivilianHarmedThisRun = false;
 
@@ -52,6 +57,8 @@ public sealed class NapReputation
             _toastQueue.Enqueue(toastMessage);
             if (delta < 0)
                 FeedbackEverShown = true;
+            if (toastMessage == BrokeNapToast)
+                NapBroken?.Invoke();
         }
 
         return applied;

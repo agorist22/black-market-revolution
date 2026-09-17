@@ -33,19 +33,33 @@ public sealed class WantedMeter
     public bool EverRaised { get; private set; }
 
     /// <summary>
+    /// Fired when <see cref="Raise"/> actually increases heat.
+    /// Args: previous level, new level (Pulse: <c>ui_wanted_tick</c>).
+    /// </summary>
+    public event Action<int, int>? Raised;
+
+    /// <summary>
+    /// Fired when <see cref="TryEngageChase"/> succeeds (Pulse: <c>stinger_wanted_alert</c>).
+    /// </summary>
+    public event Action? ChaseStarted;
+
+    /// <summary>
     /// Raise heat by <paramref name="amount"/> (default 1), clamped to <see cref="MaxLevel"/>.
     /// Marks LOS so decay does not immediately eat the new star.
-    /// Returns the new level.
+    /// Returns the new level. Fires <see cref="Raised"/> when heat increases.
     /// </summary>
     public int Raise(int amount = 1)
     {
         if (amount <= 0)
             return Level;
 
+        var before = Level;
         Level = Math.Min(MaxLevel, Level + amount);
         if (Level >= 1)
             EverRaised = true;
         SetLos(true);
+        if (Level > before)
+            Raised?.Invoke(before, Level);
         return Level;
     }
 
@@ -95,6 +109,7 @@ public sealed class WantedMeter
 
         ChaseEngaged = true;
         SetLos(true);
+        ChaseStarted?.Invoke();
         return true;
     }
 
