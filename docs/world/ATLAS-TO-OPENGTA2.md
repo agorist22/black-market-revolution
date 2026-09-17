@@ -11,7 +11,9 @@
 **Formula:** `world = atlas_px * 0.064` · `atlas = world / 0.064`  
 **Interact radius:** 48 Atlas px ≈ **3.072** world units  
 
-**Locked interact pads (Atlas):** CONTACT (720,2900), PICKUP (1000,3520), DROP (1340,3280), PROPERTY (920,3280), TRADER (320,2840), TRADER (280,2760)  
+**Locked interact pads (Atlas):** CONTACT (720,2900), PICKUP (1000,3520), DROP (1340,3280), PROPERTY (920,3280), TRADER (320,2840)  
 **CLIP:** (0,2000)–(2000,4000) · **SPAWN:** (480,2920)
+
+**Smoke:** interact radius stays **48** Atlas px (walkable pads from #46). Distance checks use **horizontal XY only** (ignore Z). Debug backup: **Home** teleports onto the nearest marker pad.
 
 If Windows overlay shows player atlas coords that do not match expected district placement on `bil`, adjust `WorldMapBlocks` / add an offset in `GreyArcadeMarkers` and re-verify — do not change Atlas numbers.
